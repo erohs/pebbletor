@@ -1,0 +1,12 @@
+text {
+    fill: var(--text-color);
+}
+
+circle {
+    cursor: pointer;
+}
+
+.selected-marker {
+    stroke: var(--accent-bg-color);
+}
+ 

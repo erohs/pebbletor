@@ -1,0 +1,34 @@
+.hill {
+    text-align: center;
+}
+
+.hill__title {
+    width: 60%;
+    font-size: 1.5em;
+    padding: var(--m-padding) 0;
+    margin: auto;
+}
+
+.hill__subtitle {
+    width: 60%;
+    color: var(--subtext-color);
+    margin: auto;
+}
+
+#hill__path {
+    fill: none;
+    stroke: var(--accent-bg-color);
+    stroke-width: 2px;
+}
+
+.hill__text {
+    font-weight: bold;
+    fill: var(--subtext-color);
+}
+
+.hill__line {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 2px;
+    stroke-dasharray: 5,5; 
+}

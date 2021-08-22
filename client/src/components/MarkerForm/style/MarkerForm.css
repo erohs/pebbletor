@@ -1,0 +1,92 @@
+.modal-form__header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--l-padding);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-form__header-title {
+    font-size: 1.5em;
+}
+
+.modal-form__header-close {
+    background: none;
+    padding: var(--s-padding) var(--m-padding);
+    border: none;
+}
+
+.modal-form__header-close { 
+    cursor: pointer;
+    color: var(--subtext-color);
+}
+
+.modal-form__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: var(--l-padding);
+}
+
+.modal-form__text {
+    padding-bottom: var(--l-padding);
+}
+
+.modal-form__content-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.modal-form__button {
+    background: none;
+    border: 2px solid var(--accent-bg-color);
+    padding: var(--s-padding) var(--m-padding);
+    border-radius: var(--border-radius);
+}
+
+.modal-form__button:hover {
+    cursor: pointer;
+    background: var(--secondary-bg-color);
+}
+
+.modal-form__button.delete { 
+    background: var(--delete-color);
+    color: var(--delete-text-color);
+    border: 2px solid var(--delete-color);
+}
+
+.modal-form__button.delete:hover { 
+    cursor: pointer;
+    background: var(--delete-hover-color);
+    border: 2px solid var(--delete-hover-color);
+}
+
+.modal-form__label {
+    margin-bottom: var(--s-padding);
+}
+
+.modal-form__input {
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--secondary-bg-color);
+    margin-bottom: var(--l-padding);
+    padding: var(--m-padding);
+    color: var(--subtext-color);
+    width: 100%;
+}
+
+.modal-form__button.save {
+    float: right;
+    border: none;
+    background: var(--accent-bg-color);
+    color: var(--accent-text-color);
+    text-decoration: none;
+    padding: var(--s-padding) var(--m-padding);
+    border-radius: var(--border-radius);
+}
+
+.modal-form__button.save:hover {
+    cursor: pointer;
+    background: var(--accent-hover-color);
+}
