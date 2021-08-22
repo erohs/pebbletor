@@ -1,4 +1,3 @@
-import React from 'react';
 import Home from "./pages/Home/Home";
 import Create from "./pages/Create/Create";
 import Edit from "./pages/Edit/Edit";
@@ -9,7 +8,7 @@ import './App.css';
 import { io } from 'socket.io-client';
 // import Footer from './components/Footer/Footer';
 
-const socket = io("https://pebbletor.herokuapp.com/");
+const socket = io("/");
 
 function App() {
     return (
