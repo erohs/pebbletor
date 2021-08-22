@@ -9,7 +9,7 @@ import './App.css';
 import { io } from 'socket.io-client';
 // import Footer from './components/Footer/Footer';
 
-const socket = io("/");
+const socket = io("https://pebbletor.herokuapp.com/");
 
 function App() {
     return (
