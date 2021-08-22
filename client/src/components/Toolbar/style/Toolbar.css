@@ -1,0 +1,113 @@
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.toolbar__icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-color);
+    padding-right: var(--m-padding);
+}
+
+.toolbar__button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: 2px solid var(--accent-bg-color);
+    border-radius: var(--border-radius);
+    padding: var(--s-padding) var(--m-padding);
+    margin: 0 var(--m-padding);
+}
+
+.toolbar__button.delete {
+    border: 2px solid var(--delete-color);
+}
+
+.toolbar__button:hover,
+.toolbar__edit-button:hover,
+.dropdown__button:hover,
+.dropdown__item:hover {
+    background: var(--secondary-bg-color);
+    cursor: pointer;
+}
+
+.toolbar__button:disabled,
+.dropdown__button:disabled,
+.toolbar__edit-button:disabled {
+    border: 2px solid var(--border-color);
+    color: var(--subtext-color);
+    cursor: unset;
+}
+
+.toolbar__button:disabled:hover,
+.dropdown__button:disabled:hover,
+.toolbar__edit-button:disabled:hover {
+    background: var(--primary-bg-color);
+}
+
+.toolbar__edit-button:disabled {
+    border-right: none;
+}
+
+.toolbar__edit {
+    display: flex;
+    flex-direction: row;
+}
+
+.toolbar__edit-button {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--accent-bg-color);
+    border-right: none;
+    background: none;
+    padding: var(--s-padding) var(--m-padding);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.dropdown {
+    display: flex;
+    position: relative;
+}
+
+.dropdown__button {
+    background: none;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border: 2px solid var(--accent-bg-color);
+    border-left: solid 2px var(--border-color);
+    padding: var(--s-padding) var(--m-padding);
+    font-size: 0.8em;
+}
+
+.dropdown__button.disabled {
+    border-left: solid 2px var(--accent-bg-color);
+}
+
+.dropdown__content {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    border: solid 2px var(--accent-bg-color);
+    border-radius: var(--border-radius);
+    top: calc(100%);
+    min-width: 113.89px;
+    left: -78.21px;
+}
+
+.dropdown__item {
+    display: flex;
+    align-items: center;
+    background: var(--primary-bg-color); 
+    border: none;
+    text-align: left;
+    padding: var(--s-padding);
+    white-space: nowrap;
+}
+
+.dropdown__marker {
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    margin-right: var(--s-padding);
+}

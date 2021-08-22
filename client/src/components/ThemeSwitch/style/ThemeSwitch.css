@@ -1,0 +1,33 @@
+.theme-switch--button {
+    border: none;
+    position: relative;
+    background-color: var(--secondary-background-color);
+    width: 20px;
+    height: 20px;
+    top: 4px;
+}
+
+.theme-switch--button:hover {
+    cursor: pointer;
+}
+
+.theme-switch--icon {
+    fill: var(--accent-color);
+    width: 20px;
+    height: 20px;
+}
+
+.theme-switch--icon:hover {
+    fill: var(--text-color);
+}
+
+
+.theme-switch--icon-sun {
+    fill: var(--text-color);
+    width: 20px;
+    height: 20px;
+}
+
+.theme-switch--icon-sun:hover {
+    fill: var(--accent-bg-color);
+}

@@ -1,0 +1,71 @@
+.home {
+    margin: auto;
+    width: 60%;
+    height: 100%;
+}
+
+.home__title {
+    font-size: 1.5em;
+    padding: var(--m-padding) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card {
+    margin: var(--m-padding) 0;
+    word-wrap: break-word;
+    border-radius: var(--border-radius);
+    padding: var(--l-padding);
+    transition: 0.1s;
+}
+
+.hill-card:hover {
+    background: var(--secondary-bg-color);
+}
+
+.hill-card__link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.hill-card__link:hover {
+    color: var(--accent-hover-color);
+}
+
+.hill-card__description {
+    padding: var(--m-padding) 0;
+}
+
+.hill-card__author {
+    color: var(--subtext-color);
+}
+
+.hill-card__data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hill-card_dates {
+    display: flex;
+    flex-direction: column;
+}
+
+.hill-card__date {
+    font-size: 0.9em;
+    color: var(--subtext-color);
+}
+
+.hill-card__delete {
+    background: none;
+    border: none;
+}
+
+.hill-card__delete svg {
+    fill: var(--delete-color)
+}
+
+.hill-card__delete svg:hover {
+    cursor: pointer;
+    fill: var(--delete-hover-color);
+}

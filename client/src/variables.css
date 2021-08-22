@@ -1,0 +1,67 @@
+.dark-theme {
+    --accent-bg-color: #BB86FC;
+    --accent-hover-color: #8c62bd;
+    --accent-text-color: #ffffff;
+    --accent-subtext-color: #707070;
+    --primary-bg-color: #1E1E1E;
+    --secondary-bg-color: #121212;
+    --text-color: #DDDDDD;
+    --subtext-color: #AAAAAA;
+    --border-color: #474747;
+    --button-color: #696969;
+    --button-hover-color: #474747;
+    --shadow: 1px 1px 5px 1px rgba(0,0,0,0.30);
+    --bottom-shadow: 0 4px 4px -2px rgba(0,0,0,0.23);
+    --delete-color: #af3636;
+    --delete-text-color: #DDDDDD;
+    --delete-hover-color: #7c1515;
+
+    --link-color: #F3ABAA;
+    --transparent-background: rgba(33,33,33,0.5);
+
+    /* padding */
+    --l-padding: 20px;
+    --m-padding: 10px;
+    --s-padding: 5px;
+    --xs-padding: 2px;
+
+    /* border */
+    --border-radius: 5px;
+
+    /* typography */
+    --default-font-size: 1em;
+}
+
+.light-theme {
+    --accent-bg-color: #1d82ca;
+    --accent-hover-color: #0566A9;
+    --accent-text-color: #ffffff;
+    --accent-subtext-color: #b9b9b9;
+    --primary-bg-color: #FFFFFF;
+    --secondary-bg-color: #eeeeee;
+    --text-color: #161616;
+    --subtext-color: #6b6b6b;
+    --border-color: #d8d8d8;
+    --button-color: #696969;
+    --button-hover-color: #474747;
+    --shadow: 1px 1px 5px 1px rgba(0,0,0,0.30);
+    --bottom-shadow: 0 4px 4px -2px rgba(0,0,0,0.23);
+    --delete-color: #af3636;
+    --delete-text-color: #DDDDDD;
+    --delete-hover-color: #7c1515;
+
+    --link-color: #F3ABAA;
+    --transparent-background: rgba(33,33,33,0.5);
+
+    /* padding */
+    --l-padding: 20px;
+    --m-padding: 10px;
+    --s-padding: 5px;
+    --xs-padding: 2px;
+
+    /* border */
+    --border-radius: 5px;
+
+    /* typography */
+    --default-font-size: 1em;
+}
