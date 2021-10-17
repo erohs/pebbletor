@@ -1,14 +1,7 @@
 import axios from 'axios';
+import { debounce } from '../util/HelperFunctions';
 
-const debounce = (func, timeout) => {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => func(...args), timeout);
-    };
-}
-
-const baseUrl = 'https://pebbletor.herokuapp.com';
+const baseUrl = 'http://localhost:5000';
 const hillUrl = `${baseUrl}/hills`;
 const markerUrl = `${baseUrl}/markers`;
 
