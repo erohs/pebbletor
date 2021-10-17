@@ -1,4 +1,6 @@
-export interface IHill{
+import { INewHill } from "./INewHill";
+
+export interface IHill extends INewHill{
     _id: string,
     name: string,
     description: string,

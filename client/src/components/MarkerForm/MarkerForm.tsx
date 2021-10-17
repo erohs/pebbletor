@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Colour } from "../../util/ColourEnum";
-import { MarkerStatus } from "../../util/MarkerStatusEnum";
+import { MarkerStatus } from "../Marker/util/MarkerStatusEnum";
 import { IMarker } from "../Marker/interfaces/IMarker";
 import { INewMarker } from "../Marker/interfaces/INewMarker";
 import { IMarkerFormProps } from "./interfaces/IMarkerFormProps";

@@ -1,4 +1,4 @@
-import { IMarkerData } from "../../../util/IMarkerData";
+import { IMarkerData } from "./IMarkerData";
 import { IMarker } from "./IMarker";
 
 export interface IMarkerProps {

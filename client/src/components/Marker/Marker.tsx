@@ -1,10 +1,10 @@
 import React from "react";
+import { IMarker } from "./interfaces/IMarker";
 import { IMarkerProps } from "./interfaces/IMarkerProps";
-import { MarkerHelper } from "../../util/MarkerHelper";
+import { MarkerHelper } from "./util/MarkerHelper";
+import { MarkerStatus } from "./util/MarkerStatusEnum";
 import * as d3 from "d3";
 import "./style/Marker.css";
-import { MarkerStatus } from "../../util/MarkerStatusEnum";
-import { IMarker } from "./interfaces/IMarker";
 
 class Marker extends React.Component<IMarkerProps> {
     private markerRef = React.createRef<SVGGElement>();
@@ -14,7 +14,7 @@ class Marker extends React.Component<IMarkerProps> {
         this.click = this.click.bind(this);
     }
 
-    drag(event: any) {
+    drag = (event: any) => {
         if (this.props.selectedMarker !== undefined && this.props.marker._id === this.props.selectedMarker._id) {
             const node = this.props.svg;
             const m = d3.pointer(event, node);
@@ -32,9 +32,7 @@ class Marker extends React.Component<IMarkerProps> {
         }
     }
 
-    click() {
-        this.props.selectMarker(this.props.marker);
-    }
+    click = () => this.props.selectMarker(this.props.marker);
 
     componentDidMount() {
         const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);

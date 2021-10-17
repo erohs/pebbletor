@@ -1,4 +1,4 @@
-import { IMarkerData } from "../../../util/IMarkerData";
+import { IMarkerData } from "../../Marker/interfaces/IMarkerData";
 import { IMarker } from "../../Marker/interfaces/IMarker";
 
 export interface IToolbarProps {

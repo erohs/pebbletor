@@ -1,6 +1,6 @@
 import { IHill } from "../../../components/Hill/interfaces/IHill";
 import { IMarker } from "../../../components/Marker/interfaces/IMarker";
-import { IMarkerData } from "../../../util/IMarkerData";
+import { IMarkerData } from "../../../components/Marker/interfaces/IMarkerData";
 
 export interface IHillPageState {
     hill: IHill,
