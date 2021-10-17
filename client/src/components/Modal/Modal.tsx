@@ -54,7 +54,7 @@ class Modal extends React.Component<IModalProps> {
                     </div>
                 );
             default:
-                return <></>;
+                return null;
         }
     }
 }

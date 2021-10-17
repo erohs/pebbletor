@@ -4,35 +4,22 @@ export class MarkerHelper {
         const svgPoint = pathNode.getPointAtLength(length);
         return [svgPoint.x, svgPoint.y];
     }
-    
+
     static getClosestPoint = (pathNode: SVGPathElement, point: [number, number]) => {
-        var pathLength = pathNode.getTotalLength(),
-            precision = 8,
-            best,
-            bestLength = 0,
-            bestDistance = Infinity;
-      
-        // linear scan for coarse approximation
-        for (var scan, scanLength = 0, scanDistance; scanLength <= pathLength; scanLength += precision) {
+        let pathLength = pathNode.getTotalLength(), precision = 8, best, bestLength = 0, bestDistance = Infinity;
+
+        for (let scan, scanLength = 0, scanDistance; scanLength <= pathLength; scanLength += precision) {
             if ((scanDistance = distance2(scan = pathNode.getPointAtLength(scanLength))) < bestDistance) {
                 best = scan;
                 bestLength = scanLength;
                 bestDistance = scanDistance;
             }
         }
-      
-        // binary search for precise estimate
+
         precision /= 2;
         while (precision > 0.5) {
-            var before,
-                after,
-                beforeLength,
-                afterLength,
-                beforeDistance,
-                afterDistance;
-        beforeLength = bestLength - precision;
-        beforeDistance = distance2(before = pathNode.getPointAtLength(beforeLength));
-            if (beforeLength >= 0 && beforeDistance < bestDistance) {
+            let before, after, beforeLength, afterLength, beforeDistance, afterDistance;
+            if ((beforeLength = bestLength - precision) >= 0 && (beforeDistance = distance2(before = pathNode.getPointAtLength(beforeLength))) < bestDistance) {
                 best = before;
                 bestLength = beforeLength;
                 bestDistance = beforeDistance;
@@ -44,11 +31,11 @@ export class MarkerHelper {
                 precision /= 2;
             }
         }
-    
+
         best = [best?.x, best?.y];
         return best;
-      
-        function distance2(p: {x: number, y: number}) {
+
+        function distance2(p: { x: number, y: number }) {
             var dx = p.x - point[0],
                 dy = p.y - point[1];
             return dx * dx + dy * dy;
