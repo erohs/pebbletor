@@ -80,7 +80,7 @@
 ## About The Project
 
 [![Pebbletor Screenshot Light Mode][product-screenshot-1]](https://pebbletor.netlify.app/)
-[![Pebbletor Screenshot Dark Mode][product-screenshot-1]](https://pebbletor.netlify.app/)
+[![Pebbletor Screenshot Dark Mode][product-screenshot-2]](https://pebbletor.netlify.app/)
 
 Our team had recently switched to creating hill charts as a means of better visualising project progression. These hill charts were created using [Miro](https://miro.com/), which meant team effort had to go into creating, maintaining and updating these charts. Pebbletor is my way of speeding up this process by separating what we had into a standalone app.
 Pebbletor will take everything that we enjoyed about using Miro:
