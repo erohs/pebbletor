@@ -9,6 +9,7 @@ const app = express();
 app.use(require('cors')());
 app.use(express.json());
 app.use('/hills', require('./routes/hills'));
+app.use('/markers', require('./routes/markers'));
 
 app.get('/', (req, res) => {
     res.send("Hello to hillchart API");

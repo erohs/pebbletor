@@ -1,4 +1,4 @@
 export interface IMarkerData {
-    id: string,
+    _id: string,
     name: string
 }

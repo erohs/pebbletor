@@ -4,13 +4,13 @@ import Toolbar from "../Toolbar/Toolbar";
 import Modal from "../Modal/Modal";
 import { IHillProps } from "./interfaces/IHillProps";
 import { IHillState } from "./interfaces/IHillState";
-import { IHill } from "./interfaces/IHill";
 import { IMarker } from "../Marker/interfaces/IMarker";
 import { hillPlaceholder } from "../../util/hillPlaceholder";
 import { IMarkerData } from "../../util/IMarkerData";
+import { createMarker, deleteMarker, fetchHill, fetchHillMarkers, debounceUpdateMarker } from "../../api";
+import { INewMarker } from "../Marker/interfaces/INewMarker";
 import * as d3 from "d3";
 import "./style/Hill.css";
-import { fetchHill, updateHill } from "../../api";
 
 class Hill extends React.Component<IHillProps, IHillState> {
     state = {
@@ -19,21 +19,11 @@ class Hill extends React.Component<IHillProps, IHillState> {
         hill: hillPlaceholder,
         markers: [],
         activeModal: "",
-        selectedMarker: {id: "", name:""},
-        isMarkerClick: false,
-        lastCall: 0
+        selectedMarker: {_id: "", name:""},
+        isMarkerClick: false
     };
 
-    update = () => {
-        const now = +new Date();
-        if (now - this.state.lastCall > 100) { //0.05 seconds
-            this.setState({ lastCall: now });
-            const hill: IHill = {...this.state.hill};
-            hill.markers = [...this.state.markers];
-            this.props.socket.emit("update-hill-markers", ({room: this.props.id, markers: this.state.markers}));
-            updateHill(this.props.id, hill);
-        }
-    }
+    update = () => this.props.socket.emit("update-hill-markers", ({room: this.props.id, markers: this.state.markers}));
 
     componentDidMount() {
         this.props.socket.emit("hill-connect", this.props.id);
@@ -63,16 +53,13 @@ class Hill extends React.Component<IHillProps, IHillState> {
         .text("Complete");
         
         this.setState({ svg: svg.node(), line: path.node() });
-        fetchHill(this.props.id)
-        .then(res => {
-            this.setState({ hill: res.data });
-            this.setState({ markers: res.data.markers });
-        });
+        fetchHill(this.props.id).then(res => this.setState({ hill: res.data }));
+        fetchHillMarkers(this.props.id).then(res => this.setState({ markers: res.data }));
     }
 
     deselectMarker = () => {
         if (!this.state.isMarkerClick) {
-            this.setState({selectedMarker: {id: "", name: ""}});
+            this.setState({selectedMarker: {_id: "", name: ""}});
         }
         this.setState({isMarkerClick: false});
     }
@@ -81,28 +68,32 @@ class Hill extends React.Component<IHillProps, IHillState> {
         this.setState({isMarkerClick: true, selectedMarker: marker});
     }
     
-    addMarker = (marker: IMarker) => {
-        this.setState({markers: [...this.state.markers, marker]}, () => {
-            this.update();
-        });
-        
+    addMarker = (marker: INewMarker) => {
+        createMarker(marker)
+            .then((res) => {
+                this.setState({markers: [...this.state.markers, res.data]}, () => {
+                    this.update();
+                });
+            });
     }
 
     updateMarker = (marker: IMarker) => {
         let newMarkers: IMarker[] = [...this.state.markers];
-        const index = newMarkers.findIndex(m => m.id === marker.id);
+        const index = newMarkers.findIndex(m => m._id === marker._id);
         newMarkers[index] = marker;
         this.setState({markers: newMarkers}, () => {
             this.update();
+            debounceUpdateMarker(marker._id, marker)
         });
     }
         
     deleteMarker = (id: string) => {
         let newMarkers: IMarker[] = [...this.state.markers];
-        const index = newMarkers.findIndex(m => m.id === id);
+        const index = newMarkers.findIndex(m => m._id === id);
         newMarkers.splice(index, 1);
         this.setState({markers: newMarkers}, () => {
             this.update();
+            deleteMarker(id);
         });
     }
 
@@ -126,7 +117,7 @@ class Hill extends React.Component<IHillProps, IHillState> {
                                 selectedMarker={this.state.selectedMarker}
                                 selectMarker={this.selectMarker}
                                 updateMarker={this.updateMarker}
-                                key={marker.id} />
+                                key={marker._id} />
                     ))}
                 </svg>
                 <Toolbar markers={this.state.markers} 
@@ -134,10 +125,11 @@ class Hill extends React.Component<IHillProps, IHillState> {
                          selectMarker={this.selectMarker}
                          selectModal={this.selectModal} />
                 <Modal modal={this.state.activeModal}
+                    hillId={this.props.id}
                     add={this.addMarker}
                     update={this.updateMarker}
                     delete={this.deleteMarker}
-                    marker={this.state.markers.find((m: IMarker) => m.id === this.state.selectedMarker.id)}
+                    marker={this.state.markers.find((m: IMarker) => m._id === this.state.selectedMarker._id)}
                     selectModal={this.selectModal} />
             </div>
         );

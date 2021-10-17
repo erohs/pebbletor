@@ -1,16 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const markerSchema = new Schema({
-    id: String,
-    name: String,
-    percentage: Number,
-    isNewPercentage: Boolean,
-    currentPos: [Number],
-    colour: String,
-    status: String
-})
-
 const hillSchema = new Schema({
     name: {
         type: String,
@@ -22,10 +12,6 @@ const hillSchema = new Schema({
     },
     author: {
         type: String,
-        required: true
-    },
-    markers: {
-        type: [markerSchema],
         required: true
     }
 }, { timestamps: true });

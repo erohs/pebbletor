@@ -1,3 +1,4 @@
+import { IMarkerData } from '../../../util/IMarkerData';
 import { IMarker } from '../../Marker/interfaces/IMarker';
 import { IHill } from './IHill';
 
@@ -7,10 +8,6 @@ export interface IHillState {
     hill: IHill,
     markers: IMarker[],
     activeModal: string,
-    selectedMarker: {
-        id: string,
-        name: string
-    }
-    isMarkerClick: boolean,
-    lastCall: number
+    selectedMarker: IMarkerData,
+    isMarkerClick: boolean
 }

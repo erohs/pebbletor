@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { IMarker } from "../../components/Marker/interfaces/IMarker";
 import "./style/Edit.css";
 
 const Edit = () => {
@@ -9,15 +8,11 @@ const Edit = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const markers: IMarker[] = [];
         const hill = { 
             name: name,
             description: description,
-            author: author,
-            markers: markers 
+            author: author
         };
-
-        console.log(hill);
     }
 
     return (

@@ -11,6 +11,7 @@ class Modal extends React.Component<IModalProps> {
                     <div className="modal">
                         <div className="modal__card">
                         <MarkerForm title="Add Marker" 
+                                    hillId={this.props.hillId}
                                     add={this.props.add} 
                                     update={this.props.update}
                                     selectModal={this.props.selectModal} />
@@ -22,10 +23,11 @@ class Modal extends React.Component<IModalProps> {
                     <div className="modal">
                         <div className="modal__card">
                             <MarkerForm title="Edit Marker"
-                                    add={this.props.add}
-                                    update={this.props.update} 
-                                    marker={this.props.marker}
-                                    selectModal={this.props.selectModal} />
+                                        hillId={this.props.hillId}
+                                        add={this.props.add}
+                                        update={this.props.update} 
+                                        marker={this.props.marker}
+                                        selectModal={this.props.selectModal} />
                         </div>
                     </div>
                 );
@@ -43,7 +45,7 @@ class Modal extends React.Component<IModalProps> {
                                     <button className="modal-form__button" onClick={() => this.props.selectModal("")}>Cancel</button>
                                     <button className="modal-form__button delete" 
                                         onClick={() => {
-                                            this.props.delete(this.props.marker!.id);
+                                            this.props.delete(this.props.marker!._id);
                                             this.props.selectModal("");
                                         }}>Delete</button>
                                 </div>
