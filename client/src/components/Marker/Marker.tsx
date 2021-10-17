@@ -15,7 +15,7 @@ class Marker extends React.Component<IMarkerProps> {
     }
 
     drag(event: any) {
-        if (this.props.selectedMarker !== undefined && this.props.marker.id === this.props.selectedMarker.id) {
+        if (this.props.selectedMarker !== undefined && this.props.marker._id === this.props.selectedMarker._id) {
             const node = this.props.svg;
             const m = d3.pointer(event, node);
             const p = MarkerHelper.getClosestPoint(this.props.line, m);
@@ -44,14 +44,14 @@ class Marker extends React.Component<IMarkerProps> {
         }
 
         const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
-        const inactiveIndex = inactive.findIndex((m: IMarker) => m.id === this.props.marker.id);
+        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
 
         if (inactiveIndex > -1) {
             position = [110, 70 + (50 * (inactiveIndex ))]
         }
 
         const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
-        const completeIndex = complete.findIndex((m: IMarker) => m.id === this.props.marker.id);
+        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
 
         if (completeIndex > -1) {
             position = [1000, 70 + (50 * (completeIndex ))]
@@ -84,7 +84,7 @@ class Marker extends React.Component<IMarkerProps> {
                 .style("fill", this.props.marker.colour)
                 .call(drag);
 
-        if (this.props.marker.id === this.props.selectedMarker.id) {
+        if (this.props.marker._id === this.props.selectedMarker._id) {
             g.append("circle")
                 .attr("r", 12)
                 .attr("class", "selected-marker")
@@ -97,7 +97,7 @@ class Marker extends React.Component<IMarkerProps> {
             .text(this.props.marker.name);
 
         const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
-        const inactiveIndex = inactive.findIndex((m: IMarker) => m.id === this.props.marker.id);
+        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
         let position = this.props.marker.currentPos;
 
         if (inactiveIndex > -1) {
@@ -105,7 +105,7 @@ class Marker extends React.Component<IMarkerProps> {
         }
 
         const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
-        const completeIndex = complete.findIndex((m: IMarker) => m.id === this.props.marker.id);
+        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
 
         if (completeIndex > -1) {
             position = [1000, 70 + (50 * (completeIndex ))]

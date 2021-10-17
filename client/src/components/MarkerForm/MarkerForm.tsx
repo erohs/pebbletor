@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Colour } from "../../util/ColourEnum";
 import { MarkerStatus } from "../../util/MarkerStatusEnum";
 import { IMarker } from "../Marker/interfaces/IMarker";
+import { INewMarker } from "../Marker/interfaces/INewMarker";
 import { IMarkerFormProps } from "./interfaces/IMarkerFormProps";
 import "./style/MarkerForm.css";
 
@@ -13,21 +14,32 @@ const MarkerForm = (props: IMarkerFormProps) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const marker: IMarker = {
-            id: props.marker?.id || Date.now().toString(),
-            name,
-            percentage: parseInt(percentage.toString()),
-            isNewPercentage: percentage !== props.marker?.percentage || 
-            ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
-            currentPos: props.marker?.currentPos || [],
-            colour,
-            status,
-        };
 
-        if (props.marker === undefined) {
-            props.add(marker);
-        } else {
+        if (props.marker?._id) {
+            const marker:IMarker = {
+                _id: props.marker._id,
+                hillId: props.hillId,
+                name,
+                percentage: parseInt(percentage.toString()),
+                isNewPercentage: percentage !== props.marker?.percentage || 
+                ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
+                currentPos: props.marker?.currentPos || [],
+                colour,
+                status,
+            };
             props.update(marker);
+        } else {
+            const marker:INewMarker = {
+                hillId: props.hillId,
+                name,
+                percentage: parseInt(percentage.toString()),
+                isNewPercentage: percentage !== props.marker?.percentage || 
+                ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
+                currentPos: props.marker?.currentPos || [],
+                colour,
+                status,
+            };
+            props.add(marker);
         }
         props.selectModal("");
     }

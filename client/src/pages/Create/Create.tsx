@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { IMarker } from "../../components/Marker/interfaces/IMarker";
 import { Redirect } from "react-router-dom";
 import "./style/Create.css";
 import { createHill } from "../../api";
@@ -12,12 +11,10 @@ const Create = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const markers: IMarker[] = [];
         const hill = { 
             name,
             description,
-            author,
-            markers
+            author
         };
 
         createHill(hill)
