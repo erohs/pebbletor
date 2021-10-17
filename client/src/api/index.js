@@ -8,7 +8,7 @@ const debounce = (func, timeout) => {
     };
 }
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://pebbletor.herokuapp.com';
 const hillUrl = `${baseUrl}/hills`;
 const markerUrl = `${baseUrl}/markers`;
 
