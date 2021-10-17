@@ -5,7 +5,6 @@ export const hillPlaceholder: IHill = {
     name: "",
     description: "",
     author: "",
-    markers: [],
     createdAt: 0,
     updatedAt: 0
 }
