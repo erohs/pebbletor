@@ -1,6 +1,6 @@
-import { IMarker } from "../../Marker/interfaces/IMarker";
+import { INewHill } from "./INewHill";
 
-export interface IHill{
+export interface IHill extends INewHill{
     _id: string,
     name: string,
     description: string,

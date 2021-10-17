@@ -1,13 +1,14 @@
-
-import { Socket } from "socket.io-client/build/socket";
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
+import { IMarkerData } from "../../Marker/interfaces/IMarkerData";
+import { IMarker } from "../../Marker/interfaces/IMarker";
+import { IHill } from "./IHill";
 
 export interface IHillProps {
-    id: string,
-    size: {
-        width: number,
-        height: number
-    },
-    points: Array<Array<number>>,
-    socket: Socket<DefaultEventsMap, DefaultEventsMap>
+    hill: IHill,
+    markers: IMarker[],
+    selectedMarker: IMarkerData,
+    updateMarker: (marker: IMarker) => void,
+    selectMarker: (marker: IMarker) => void,
+    deselectMarker: (marker: IMarker) => void,
+    size: { width: number, height: number },
+    points: Array<Array<number>>
 }

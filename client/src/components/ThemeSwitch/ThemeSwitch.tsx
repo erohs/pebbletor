@@ -1,34 +1,23 @@
 import React from 'react';
-import './style/ThemeSwitch.css';
 import { IThemeSwitchState } from './interfaces/IThemeSwitchState';
+import './style/ThemeSwitch.css';
 
 class ThemeSwitch extends React.Component {
-    state: IThemeSwitchState = {
-        checked: true
-    }
+    state: IThemeSwitchState = { checked: true }
 
     componentDidMount() {
-        if (localStorage.getItem('theme') === 'dark-theme') {
-            this.setTheme('dark-theme');
-        } else {
-            this.setTheme('light-theme');
-        }
+        localStorage.getItem('theme') === 'dark-theme' ? this.setTheme('dark-theme') : this.setTheme('light-theme');
     }
 
     setTheme = (themeName: string) => {
-        if (themeName === "light-theme") {
-            this.setState({ checked: false })
-        } else {
-            this.setState({ checked: true })
-        }
-
+        themeName === "light-theme" ? this.setState({ checked: false }): this.setState({ checked: true });
         localStorage.setItem('theme', themeName);
         document.querySelector('body')!.className = themeName;
     }
 
     onClick = () => {
         const updateChecked = !this.state.checked;
-        const themeName: string = updateChecked ? "dark-theme" : "light-theme";
+        const themeName = updateChecked ? "dark-theme" : "light-theme";
         this.setTheme(themeName);
     }
 
@@ -44,6 +33,7 @@ class ThemeSwitch extends React.Component {
                 </div>
             )
         }
+        
         return (
             <div className="theme-switch">
                 <button className="theme-switch--button" onClick={this.onClick} >
