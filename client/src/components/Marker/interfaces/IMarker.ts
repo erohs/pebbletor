@@ -1,6 +1,7 @@
-import { IMarkerData } from "../../../util/IMarkerData";
+import { IMarkerData } from "./IMarkerData";
+import { INewMarker } from "./INewMarker";
 
-export interface IMarker extends IMarkerData {
+export interface IMarker extends IMarkerData, INewMarker {
     _id: string,
     hillId: string,
     name: string,
@@ -8,5 +9,7 @@ export interface IMarker extends IMarkerData {
     isNewPercentage: boolean,
     currentPos: number[],
     colour: string,
-    status: string
+    status: string,
+    createdAt: number,
+    updatedAt: number
 }

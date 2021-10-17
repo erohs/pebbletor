@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import "./style/Create.css";
 import { createHill } from "../../api";
+import { INewHill } from "../../components/Hill/interfaces/INewHill";
+import "./style/Create.css";
 
 const Create = () => {
     const [name, setName] = useState('');
@@ -11,14 +12,14 @@ const Create = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const hill = { 
+        const hill: INewHill = { 
             name,
             description,
             author
         };
 
         createHill(hill)
-            .then(res => {
+            .then(() => {
                 setRedirect(true);
             });
     }

@@ -1,9 +1,9 @@
 import React from "react";
-import { IMarkerData } from "../../util/IMarkerData";
 import AddIcon from "../Icons/AddIcon";
 import DeleteIcon from "../Icons/DeleteIcon";
 import EditIcon from "../Icons/EditIcon";
 import { IMarker } from "../Marker/interfaces/IMarker";
+import { IMarkerData } from "../Marker/interfaces/IMarkerData";
 import { IToolbarProps } from "./interfaces/IToolbarProps";
 import "./style/Toolbar.css";
 
