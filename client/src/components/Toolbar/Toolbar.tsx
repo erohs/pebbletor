@@ -42,7 +42,7 @@ class Toolbar extends React.Component<IToolbarProps> {
     }
     
     render() {
-        const disable = !this.props.markers.some(marker => this.props.selectedMarker !== undefined && marker.id === this.props.selectedMarker.id);
+        const disable = !this.props.markers.some(marker => this.props.selectedMarker !== undefined && marker._id === this.props.selectedMarker._id);
         const empty = this.props.markers.length === 0;
         const style = disable && !empty ? "dropdown__button disabled" : "dropdown__button" ;
         return (
@@ -64,7 +64,7 @@ class Toolbar extends React.Component<IToolbarProps> {
                              ref={this.dropdownContentRef}>
                             {this.props.markers.map((marker: IMarker, index) => (
                                 <button className="dropdown__item"
-                                        onClick={() => this.edit({id: marker.id, name: marker.name})}
+                                        onClick={() => this.edit({_id: marker._id, name: marker.name})}
                                         key={index}>
                                     <div style={{backgroundColor: marker.colour}} className="dropdown__marker"></div>{marker.name}
                                 </button>

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Hill = require('../models/hill');
+let Marker = require('../models/marker');
 
 router.route('/').get((req, res) => {
     Hill.find()
@@ -7,16 +8,14 @@ router.route('/').get((req, res) => {
         .catch(error => res.status(400).json('Error: ' + error));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/').post((req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const author = req.body.author;
-    const markers = req.body.markers;
     const newHill = new Hill({
         name,
         description,
-        author,
-        markers,
+        author
     });
 
     newHill.save()
@@ -34,15 +33,17 @@ router.route('/:id').delete((req, res) => {
     Hill.findByIdAndDelete(req.params.id)
         .then(() => res.json('Hill deleted.'))
         .catch(error => res.status(400).json('Error: ' + error));
+    Marker.deleteMany({hillId: req.params.id})
+        .then(() => res.json('Markers deleted.'))
+        .catch(error => res.status(400).json('Error: ' + error));
 });
 
-router.route('/update/:id').post((req, res) => {
+router.route('/:id').post((req, res) => {
     Hill.findById(req.params.id)
         .then(hill => {
             hill.name = req.body.name;
             hill.description = req.body.description;
             hill.author = req.body.author;
-            hill.markers = req.body.markers;
 
             hill.save()
                 .then(() => res.json('Hill updated!'))
