@@ -80,7 +80,6 @@
 ## About The Project
 
 [![Pebbletor Screenshot Light Mode][product-screenshot-1]](https://pebbletor.netlify.app/)
-[![Pebbletor Screenshot Dark Mode][product-screenshot-2]](https://pebbletor.netlify.app/)
 
 Our team had recently switched to creating hill charts as a means of better visualising project progression. These hill charts were created using [Miro](https://miro.com/), which meant team effort had to go into creating, maintaining and updating these charts. Pebbletor is my way of speeding up this process by separating what we had into a standalone app.
 Pebbletor will take everything that we enjoyed about using Miro:
@@ -138,20 +137,18 @@ And expand upon it, bringing much more value to us whilst being less of a time s
    ```js
    ATLAS_URI='ENTER YOUR URI';
    ```
-   or
+   or for local development
    ```js
    ATLAS_URI='mongodb://localhost:27017/hillchart';
    ```
-   for local development
 5. Change the baseUrl within `index.ts` within the client api folder
    ```js
    const baseUrl = 'ENTER SERVER DEPLOYMENT URL';
    ```
-   or
+   or for local development
    ```js
    const baseUrl = 'http://localhost:5000';
    ```
-   for local development
 6. Start your server from the server folder or run your backend deployment
    ```sh
    nodemon server.js
