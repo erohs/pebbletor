@@ -15,32 +15,27 @@ const MarkerForm = (props: IMarkerFormProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        const newMarker: INewMarker = {
+            hillId: props.hillId,
+            name,
+            percentage: parseInt(percentage.toString()),
+            isNewPercentage: percentage !== props.marker?.percentage || 
+            ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
+            currentPos: props.marker?.currentPos || [],
+            colour,
+            status,
+        }
+
         if (props.marker?._id) {
-            const marker:IMarker = {
-                _id: props.marker._id,
-                hillId: props.hillId,
-                name,
-                percentage: parseInt(percentage.toString()),
-                isNewPercentage: percentage !== props.marker?.percentage || 
-                ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
-                currentPos: props.marker?.currentPos || [],
-                colour,
-                status,
+            const marker:IMarker = { 
+                ...newMarker,
+                _id: props.marker?._id,
+                createdAt: props.marker?.createdAt,
+                updatedAt: props.marker?.updatedAt
             };
             props.update(marker);
-        } else {
-            const marker:INewMarker = {
-                hillId: props.hillId,
-                name,
-                percentage: parseInt(percentage.toString()),
-                isNewPercentage: percentage !== props.marker?.percentage || 
-                ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active),
-                currentPos: props.marker?.currentPos || [],
-                colour,
-                status,
-            };
-            props.add(marker);
-        }
+        } else props.add(newMarker);
+
         props.selectModal("");
     }
 
