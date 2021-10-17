@@ -2,11 +2,11 @@ import Home from "./pages/Home/Home";
 import Create from "./pages/Create/Create";
 import Edit from "./pages/Edit/Edit";
 import Navbar from './components/Navbar/Navbar';
-import Hill from './components/Hill/Hill';
+import HillPage from "./pages/HillPage/HillPage";
+// import Footer from './components/Footer/Footer';
+import { io } from 'socket.io-client';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
-import { io } from 'socket.io-client';
-// import Footer from './components/Footer/Footer';
 
 const socket = io("/");
 
@@ -27,7 +27,7 @@ function App() {
                             <Create />
                         </Route>
                         <Route path="/hill/:id" render={(props) => (
-                            <Hill size={{width: 1200, height: 450}} points={[[100,400],[300,350],[600,120],[900,350],[1100,400]]} id={props.match.params.id} socket={socket} />
+                            <HillPage id={props.match.params.id} socket={socket} />
                         )} />
                     </div>
                 </Switch>
