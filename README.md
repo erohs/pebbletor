@@ -40,7 +40,7 @@
     <a href="https://github.com/erohs/pebbletor"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/erohs/pebbletor">View Demo</a>
+    <a href="https://pebbletor.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/erohs/pebbletor/issues">Report Bug</a>
     ·
@@ -84,9 +84,11 @@
 
 Our team had recently switched to creating hill charts as a means of better visualising project progression. These hill charts were created using [Miro](https://miro.com/), which meant team effort had to go into creating, maintaining and updating these charts. Pebbletor is my way of speeding up this process by separating what we had into a standalone app.
 Pebbletor will take everything that we enjoyed about using Miro:
+
 * Cusomisation 
 * Ease of access
 * Live collaboration
+
 And expand upon it, bringing much more value to us whilst being less of a time sink for the development team. It will provide a platform for expansion into <a href="#roadmap">valuable features</a>
  
 
@@ -112,12 +114,9 @@ And expand upon it, bringing much more value to us whilst being less of a time s
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+* git
 * npm
   ```sh
   npm install -g npm@latest 
@@ -169,18 +168,18 @@ This is an example of how to list things you need to use the software and how to
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] Custom images
-    - [] Marker images
-    - [] Hill Chart background
-- [] User accounts
-- [] Stat tracking
-    - [] Marker history system
-    - [] Reporting on stats
-- [] Jira integration
-    - [] Sync issues from epic
-    - [] Place synced issue onto chart
-- [] Copy chart as PNG (Default Styling)
-- [] Daily / Weekly objectives
+- [ ] Custom images
+    - [ ] Marker images
+    - [ ] Hill Chart background
+- [ ] User accounts
+- [ ] Stat tracking
+    - [x] Marker history system
+    - [ ] Reporting on stats
+- [ ] Jira integration
+    - [ ] Sync issues from epic
+    - [ ] Place synced issue onto chart
+- [ ] Copy chart as PNG (Default Styling)
+- [ ] Daily / Weekly objectives
 
 See the [open issues](https://github.com/erohs/pebbletor/issues) for a full list of proposed features (and known issues).
 
