@@ -4,10 +4,10 @@ import Modal from "../../components/Modal/Modal";
 import Toolbar from "../../components/Toolbar/Toolbar";
 import { IMarker } from "../../components/Marker/interfaces/IMarker";
 import { INewMarker } from "../../components/Marker/interfaces/INewMarker";
-import { IMarkerData } from "../../util/IMarkerData";
+import { IMarkerData } from "../../components/Marker/interfaces/IMarkerData";
 import { IHillPageProps } from "./interfaces/IHillPageProps"
 import { IHillPageState } from "./interfaces/IHillPageState";
-import { hillPlaceholder } from "../../util/hillPlaceholder";
+import { hillPlaceholder } from "../../components/Hill/hillPlaceholder";
 import { createMarker, debounceUpdateMarker, deleteMarker, fetchHill, fetchHillMarkers } from "../../api";
 import "./style/HillPage.css";
 

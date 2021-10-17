@@ -1,4 +1,4 @@
-import { IMarkerData } from "../../../util/IMarkerData";
+import { IMarkerData } from "./IMarkerData";
 
 export interface IMarker extends IMarkerData {
     _id: string,

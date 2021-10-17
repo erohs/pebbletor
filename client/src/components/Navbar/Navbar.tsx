@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { Link } from "react-router-dom";
 import "./style/Navbar.css";
 
 export default class Navbar extends React.Component {

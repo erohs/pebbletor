@@ -1,10 +1,10 @@
 import React from "react";
+import DeleteIcon from "../../components/Icons/DeleteIcon";
+import { Link } from "react-router-dom";
 import { IHomeState } from "./interfaces/IHomeState";
 import { IHill } from "../../components/Hill/interfaces/IHill";
-import { Link } from "react-router-dom";
 import { deleteHill, fetchHills } from "../../api";
 import "./style/Home.css";
-import DeleteIcon from "../../components/Icons/DeleteIcon";
 
 class Home extends React.Component<{}, IHomeState> {
     state = {
