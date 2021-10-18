@@ -1,7 +1,14 @@
 const router = require('express').Router();
 let Marker = require('../models/marker');
+let Hill = require('../models/hill');
 
 router.route('/').post((req, res) => {
+    Hill.findById(req.body.hillId)
+        .then(hill => {
+            hill.updatedAt = undefined;
+            hill.save();
+        })
+        .catch(error => res.status(400).json('Error: ' + error));
     const hillId = req.body.hillId;
     const name = req.body.name;
     const percentage = req.body.percentage;
@@ -28,17 +35,33 @@ router.route('/').post((req, res) => {
 
 router.route('/:id').get((req, res) => {
     Marker.findById(req.params.id)
-        .then(marker => res.json(marker))
+        .then(marker => {res.json(marker)})
         .catch(error => res.status(400).json('Error: ' + error));
 });
 
 router.route('/:id').delete((req, res) => {
-    Marker.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Marker deleted.'))
+    Marker.findById(req.params.id)
+        .then(marker => {
+            Hill.findById(marker.hillId)
+                .then(hill => {
+                    hill.updatedAt = undefined;
+                    hill.save();
+                })
+                .catch(error => res.status(400).json('Error: ' + error));
+            Marker.deleteOne({_id: req.params.id})
+                .then(() => res.json('Marker deleted.'))
+                .catch(error => res.status(400).json('Error: ' + error));
+        })
         .catch(error => res.status(400).json('Error: ' + error));
 });
 
 router.route('/:id').post((req, res) => {
+    Hill.findById(req.body.hillId)
+            .then(hill => {
+                hill.updatedAt = undefined;
+                hill.save();
+            })
+            .catch(error => res.status(400).json('Error: ' + error));
     Marker.findById(req.params.id)
         .then(marker => {
             marker.hillId = req.body.hillId;
@@ -51,10 +74,15 @@ router.route('/:id').post((req, res) => {
             marker.status = req.body.status;
 
             marker.save()
-                .then(() => res.json('Marker updated!'))
+                .then(() => {
+                    
+                    res.json('Marker updated!');
+                })
                 .catch(error => res.status(400).json('Error: ' + error));
+            
         })
         .catch(error => res.status(400).json('Error: ' + error));
+
 });
 
 router.route('/hill/:id').get((req, res) => {
