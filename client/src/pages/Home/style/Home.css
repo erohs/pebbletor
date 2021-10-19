@@ -2,6 +2,7 @@
     margin: auto;
     width: 60%;
     height: 100%;
+    padding-bottom: var(--l-padding);
 }
 
 .home__title {
@@ -78,4 +79,23 @@
 .hill-card__delete svg:hover {
     cursor: pointer;
     fill: var(--delete-hover-color);
+}
+
+.home__next {
+    display: flex;
+    justify-content: center;
+}
+
+.load-more {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: 2px solid var(--accent-bg-color);
+    border-radius: var(--border-radius);
+    padding: var(--s-padding) var(--m-padding);
+}
+
+.load-more:hover {
+    background: var(--secondary-bg-color);
+    cursor: pointer;
 }
