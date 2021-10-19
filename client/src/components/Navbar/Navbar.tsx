@@ -1,11 +1,14 @@
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import Brand from "../Brand/Brand";
 import { Link } from "react-router-dom";
 import "./style/Navbar.css";
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <Link to="/" className="navbar__brand">PEBBLETOR</Link>
+            <Link to="/" className="navbar__brand">
+                <Brand />
+            </Link>
             <ul className="navbar__nav">
                 <li className="navbar__item"><ThemeSwitch /></li>
                 <li className="navbar__item">

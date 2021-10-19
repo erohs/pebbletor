@@ -5,10 +5,15 @@ import { IHomeState } from "./interfaces/IHomeState";
 import { IHill } from "../../components/Hill/interfaces/IHill";
 import { deleteHill, fetchHills } from "../../api";
 import "./style/Home.css";
+import EditIcon from "../../components/Icons/EditIcon";
+import { hillPlaceholder } from "../../components/Hill/util/hillPlaceholder";
+import ModalContainer from "../../components/Modal/ModalContainer";
 
 class Home extends React.Component<{}, IHomeState> {
     state = {
-        hills: []
+        hills: [],
+        hill: hillPlaceholder,
+        showModal: false
     };
 
     componentDidMount() {
@@ -22,6 +27,16 @@ class Home extends React.Component<{}, IHomeState> {
                 const hills = this.state.hills.filter((hill: IHill) => hill._id !== id);
                 this.setState({ hills: hills });
             });
+    }
+
+    selectHill = (hill: IHill) => {
+        this.setState({ hill });
+        this.setState({ showModal: true });
+    }
+
+    deselectHill = () => {
+        this.setState({ hill: hillPlaceholder });
+        this.setState({ showModal: false });
     }
 
     render() {
@@ -40,12 +55,22 @@ class Home extends React.Component<{}, IHomeState> {
                                 <p className="hill-card__date">Created {new Date(hill.createdAt).toUTCString()}</p>
                                 {hill.updatedAt && <p className="hill-card__date">Last updated {new Date(hill.updatedAt).toUTCString()}</p>}
                             </div>
-                            <button onClick={() => this.deleteHill(hill._id)} className="hill-card__delete">
-                                <DeleteIcon />
-                            </button>
+                            <div className="hill-card__buttons">
+                                <Link to={`/edit/${hill._id}`} className="hill-card__edit"><EditIcon /></Link>
+                                <button onClick={() => this.selectHill(hill)} className="hill-card__delete">
+                                    <DeleteIcon />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))}
+                <ModalContainer onSubmit={() => this.deleteHill(this.state.hill!._id)}
+                                onClose={() => this.deselectHill()}
+                                isShown={this.state.showModal}
+                                text={{title: "Delete Hill", submit: "Delete"}}
+                                className="delete">
+                    <p>Are you sure you want to delete <b>{this.state.hill.name}</b>?</p>
+                </ModalContainer>
             </div>
         );
     }

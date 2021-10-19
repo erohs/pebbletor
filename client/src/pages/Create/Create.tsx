@@ -31,26 +31,26 @@ const Create = () => {
     return (
         <div className="create">
             <h1 className="create__title">Create a hill chart</h1>
-            <form onSubmit={handleSubmit} className="card create__form">
-                <label className="create__label">Hill chart name: </label>
+            <form onSubmit={handleSubmit} className="card form">
+                <label className="form__label">Hill chart name: </label>
                 <input type="text"
-                       className="create__input"
+                       className="form__input"
                        required 
                        value={name}
                        onChange={(e) => setName(e.target.value)} />
-                <label className="create__label">Hill chart description: </label>
-                <textarea className="create__input"
+                <label className="form__label">Hill chart description: </label>
+                <textarea className="form__input"
                           required
                           value={description}
                           onChange={(e) => setDescription(e.target.value)} />
-                <label className="create__label">Hill chart author: </label>
+                <label className="form__label">Hill chart author: </label>
                 <input type="text"
-                       className="create__input"
+                       className="form__input"
                        required
                        value={author}
                        onChange={(e) => setAuthor(e.target.value)} />
                 <span>
-                    <button className="create__save" type="submit">Save</button>
+                    <button className="form__save" type="submit">Save</button>
                 </span>
             </form>
         </div>

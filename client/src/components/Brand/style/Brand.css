@@ -1,0 +1,17 @@
+.brand {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+}
+
+.brand__logo {
+    width: 40px;
+    height: 40px;
+}
+
+.brand__text {
+    margin-left: var(--m-padding);
+    color: var(--accent-bg-color);
+    font-size: 2em;
+    letter-spacing: 0.1em;
+}

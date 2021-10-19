@@ -10,10 +10,7 @@
 }
 
 .navbar__brand {
-    color: var(--accent-bg-color);
     text-decoration: none;
-    font-size: 2em;
-    letter-spacing: 0.2em;
 }
 
 .navbar__nav {

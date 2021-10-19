@@ -5,7 +5,7 @@ export interface IModalContainerProps {
     onSubmit: () => void,
     onClose: () => void,
     isShown: boolean,
-    trigger: React.RefObject<HTMLButtonElement>,
+    trigger?: React.RefObject<HTMLButtonElement>,
     text: IModalText,
     className?: string
 }

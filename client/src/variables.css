@@ -1,6 +1,6 @@
 .dark-theme {
-    --accent-bg-color: #BB86FC;
-    --accent-hover-color: #8c62bd;
+    --accent-bg-color: #00a6ff;
+    --accent-hover-color: #0088d1;
     --accent-text-color: #ffffff;
     --accent-subtext-color: #707070;
     --primary-bg-color: #1E1E1E;
@@ -33,8 +33,8 @@
 }
 
 .light-theme {
-    --accent-bg-color: #1d82ca;
-    --accent-hover-color: #0566A9;
+    --accent-bg-color: #0088CF;
+    --accent-hover-color: #00669C;
     --accent-text-color: #ffffff;
     --accent-subtext-color: #b9b9b9;
     --primary-bg-color: #FFFFFF;
