@@ -1,0 +1,11 @@
+.edit {
+    margin: auto;
+    width: 60%;
+    height: 100%;
+}
+
+.edit__title {
+    font-size: 1.5em;
+    padding: var(--m-padding) 0;
+    border-bottom: 1px solid var(--border-color);
+}

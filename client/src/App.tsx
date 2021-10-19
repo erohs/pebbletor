@@ -20,13 +20,13 @@ function App() {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Route path="/edit/:id">
-                            <Edit />
-                        </Route>
+                        <Route path="/edit/:id" render={props => (
+                            <Edit id={props.match.params.id}/>
+                        )} />
                         <Route path="/create">
                             <Create />
                         </Route>
-                        <Route path="/hill/:id" render={(props) => (
+                        <Route path="/hill/:id" render={props => (
                             <HillPage id={props.match.params.id} socket={socket} />
                         )} />
                     </div>
