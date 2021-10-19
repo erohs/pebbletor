@@ -20,7 +20,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarStatus> {
     
     selectModal = (modal: string) => this.setState({activeModal: modal});
 
-    edit = (id: string) => {
+    openEditModal = (id: string) => {
         this.toggleDropdown();
         this.props.selectMarker(id);
         this.selectModal(ModalType.Edit);
@@ -77,7 +77,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarStatus> {
                                 ref={this.dropdownContentRef}>
                                 {this.props.markers.map((marker: IMarker, index) => (
                                     <button className="dropdown__item"
-                                            onClick={() => this.edit(marker._id)}
+                                            onClick={() => this.openEditModal(marker._id)}
                                             key={index}>
                                         <div style={{backgroundColor: marker.colour}} className="dropdown__marker"></div>{marker.name}
                                     </button>
