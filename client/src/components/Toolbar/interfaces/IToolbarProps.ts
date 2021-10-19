@@ -1,9 +1,12 @@
-import { IMarkerData } from "../../Marker/interfaces/IMarkerData";
 import { IMarker } from "../../Marker/interfaces/IMarker";
+import { INewMarker } from "../../Marker/interfaces/INewMarker";
 
 export interface IToolbarProps {
     markers: IMarker[],
-    selectedMarker: IMarkerData,
-    selectMarker: (selectedMarker: IMarkerData) => void,
-    selectModal: (modal: string) => void,
+    selectedMarker: string,
+    hillId: string,
+    selectMarker: (id: string) => void,
+    add: (marker: INewMarker) => void,
+    update: (marker: IMarker) => void,
+    delete: (id: string) => void,
 }

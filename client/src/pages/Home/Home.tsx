@@ -44,7 +44,6 @@ class Home extends React.Component<{}, IHomeState> {
                                 <DeleteIcon />
                             </button>
                         </div>
-                        
                     </div>
                 ))}
             </div>
