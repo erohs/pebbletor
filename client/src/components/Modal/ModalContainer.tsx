@@ -27,6 +27,11 @@ class ModalContainer extends React.Component<IModalContainerProps> {
         this.closeModal();
     };
 
+    onSubmit = () => {
+        this.toggleScrollLock();
+        this.props.onSubmit();
+    }
+
     componentDidMount() {
         if (this.props.isShown) {
             this.closeRef.current!.focus();
@@ -36,7 +41,7 @@ class ModalContainer extends React.Component<IModalContainerProps> {
 
     render() {
         return this.props.isShown ? (
-            <Modal onSubmit={this.props.onSubmit}
+            <Modal onSubmit={this.onSubmit}
                    modalRef={this.modalRef}
                    closeRef={this.closeRef}
                    text={this.props.text}

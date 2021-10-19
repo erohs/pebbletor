@@ -1,24 +1,34 @@
 import React from "react";
 import DeleteIcon from "../../components/Icons/DeleteIcon";
+import EditIcon from "../../components/Icons/EditIcon";
+import ModalContainer from "../../components/Modal/ModalContainer";
 import { Link } from "react-router-dom";
 import { IHomeState } from "./interfaces/IHomeState";
 import { IHill } from "../../components/Hill/interfaces/IHill";
 import { deleteHill, fetchHills } from "../../api";
-import "./style/Home.css";
-import EditIcon from "../../components/Icons/EditIcon";
 import { hillPlaceholder } from "../../components/Hill/util/hillPlaceholder";
-import ModalContainer from "../../components/Modal/ModalContainer";
+import { IPagintation } from "./interfaces/IPagination";
+import "./style/Home.css";
 
-class Home extends React.Component<{}, IHomeState> {
-    state = {
+class Home extends React.Component {
+    state: IHomeState = {
         hills: [],
         hill: hillPlaceholder,
-        showModal: false
+        showModal: false,
+        nextPage: undefined,
+        previousPage: undefined
     };
 
     componentDidMount() {
-        fetchHills()
-            .then(res => this.setState({ hills: [...this.state.hills, ...res.data] }));
+        fetchHills(1, 4)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ 
+                    hills: [...this.state.hills, ...res.data.results],
+                    nextPage: res.data.next,
+                    previousPage: res.data.previous
+                })
+            });
     }
 
     deleteHill = (id: string) => {
@@ -37,6 +47,18 @@ class Home extends React.Component<{}, IHomeState> {
     deselectHill = () => {
         this.setState({ hill: hillPlaceholder });
         this.setState({ showModal: false });
+    }
+
+    fetchNextHills = (next: IPagintation) => {
+        fetchHills(next.page, next.limit)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ 
+                    hills: [...this.state.hills, ...res.data.results],
+                    nextPage: res.data.next,
+                    previousPage: res.data.previous
+                })
+            });
     }
 
     render() {
@@ -64,6 +86,14 @@ class Home extends React.Component<{}, IHomeState> {
                         </div>
                     </div>
                 ))}
+                { this.state.nextPage ? (
+                    <div className="home__next">
+                        <button className="load-more"
+                                onClick={() => this.fetchNextHills(this.state.nextPage!)}>
+                                <p>Load More</p>
+                        </button>
+                    </div>
+                ) : null }
                 <ModalContainer onSubmit={() => this.deleteHill(this.state.hill!._id)}
                                 onClose={() => this.deselectHill()}
                                 isShown={this.state.showModal}
