@@ -1,4 +1,4 @@
-import { IHill } from "./interfaces/IHill";
+import { IHill } from "../interfaces/IHill";
 
 export const hillPlaceholder: IHill = {
     _id: "",
