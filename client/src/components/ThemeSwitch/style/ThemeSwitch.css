@@ -1,4 +1,4 @@
-.theme-switch--button {
+.theme-switch__button {
     border: none;
     position: relative;
     background-color: var(--secondary-background-color);
@@ -7,27 +7,26 @@
     top: 4px;
 }
 
-.theme-switch--button:hover {
+.theme-switch__button:hover {
     cursor: pointer;
 }
 
-.theme-switch--icon {
+.theme-switch__icon {
     fill: var(--accent-color);
     width: 20px;
     height: 20px;
 }
 
-.theme-switch--icon:hover {
+.theme-switch__icon:hover {
     fill: var(--text-color);
 }
 
-
-.theme-switch--icon-sun {
+.theme-switch__icon--sun {
     fill: var(--text-color);
     width: 20px;
     height: 20px;
 }
 
-.theme-switch--icon-sun:hover {
+.theme-switch__icon--sun:hover {
     fill: var(--accent-bg-color);
 }
