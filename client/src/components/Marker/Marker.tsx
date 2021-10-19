@@ -15,7 +15,7 @@ class Marker extends React.Component<IMarkerProps> {
     }
 
     drag = (event: any) => {
-        if (this.props.selectedMarker !== undefined && this.props.marker._id === this.props.selectedMarker._id) {
+        if (this.props.selectedMarker !== undefined && this.props.marker._id === this.props.selectedMarker) {
             const node = this.props.svg;
             const m = d3.pointer(event, node);
             const p = MarkerHelper.getClosestPoint(this.props.line, m);
@@ -32,7 +32,7 @@ class Marker extends React.Component<IMarkerProps> {
         }
     }
 
-    click = () => this.props.selectMarker(this.props.marker);
+    click = () => this.props.selectMarker(this.props.marker._id);
 
     componentDidMount() {
         const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);
@@ -82,7 +82,7 @@ class Marker extends React.Component<IMarkerProps> {
                 .style("fill", this.props.marker.colour)
                 .call(drag);
 
-        if (this.props.marker._id === this.props.selectedMarker._id) {
+        if (this.props.marker._id === this.props.selectedMarker) {
             g.append("circle")
                 .attr("r", 12)
                 .attr("class", "selected-marker")

@@ -1,62 +1,46 @@
-import React from "react";
-import MarkerForm from "../MarkerForm/MarkerForm";
-import { IModalProps } from "./interfaces/IModalProps";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FocusTrap from 'focus-trap-react';
+import { IModalProps } from './interfaces/IModalProps';
 import "./style/Modal.css";
 
-class Modal extends React.Component<IModalProps> {
-    render() {
-        switch(this.props.modal) {
-            case "add":
-                return (
-                    <div className="modal">
-                        <div className="modal__card">
-                        <MarkerForm title="Add Marker" 
-                                    hillId={this.props.hillId}
-                                    add={this.props.add} 
-                                    update={this.props.update}
-                                    selectModal={this.props.selectModal} />
-                        </div>
+const Modal : React.FC<IModalProps> = props => {
+    const classname = `modal__button highlight ${props.className}`;
+
+    return ReactDOM.createPortal(
+        <FocusTrap>
+            <aside role="dialog"
+                   tabIndex={-1}
+                   aria-modal="true"
+                   className="modal"
+                   onClick={event => props.onClickOutside(event)}
+                   onKeyDown={event => props.onKeyDown(event)}>
+                <div className="modal__card" ref={props.modalRef}>
+                    <div className="modal__header"> 
+                        <h2 className="modal__header-title">{props.text.title}</h2>
+                        <button ref={props.closeRef}
+                                className="modal__header-close"
+                                aria-label="Close Modal"
+                                aria-labelledby="close-modal"
+                                onClick={() => props.closeModal()}>x</button>
+                        <span id="close-modal" className="hide-visual">
+                            Close
+                        </span>
                     </div>
-                );
-            case "edit":
-                return (
-                    <div className="modal">
-                        <div className="modal__card">
-                            <MarkerForm title="Edit Marker"
-                                        hillId={this.props.hillId}
-                                        add={this.props.add}
-                                        update={this.props.update} 
-                                        marker={this.props.marker}
-                                        selectModal={this.props.selectModal} />
-                        </div>
+                    <div className="modal__content">{props.children}</div>
+                    <div className="modal__footer">
+                        <button className="modal__button" onClick={() => props.closeModal()}>Cancel</button>
+                        <button className={classname} 
+                                onClick={() => {
+                                    props.onSubmit()
+                                    props.closeModal()
+                                }}>{props.text.submit}</button>
                     </div>
-                );
-            case "delete":
-                return (
-                    <div className="modal">
-                        <div className="modal__card">
-                            <div className="modal-form__header">
-                                <h2 className="modal-form__header-title">Delete Marker</h2>
-                                <button className="modal-form__header-close" onClick={() => this.props.selectModal("")}>x</button>
-                            </div>
-                            <div className="modal-form__content">
-                                <p className="modal-form__text" >Are you sure you want to delete '{this.props.marker!.name}'?</p>
-                                <div className="modal-form__content-buttons">
-                                    <button className="modal-form__button" onClick={() => this.props.selectModal("")}>Cancel</button>
-                                    <button className="modal-form__button delete" 
-                                        onClick={() => {
-                                            this.props.delete(this.props.marker!._id);
-                                            this.props.selectModal("");
-                                        }}>Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            default:
-                return null;
-        }
-    }
-}
+                </div>
+            </aside>
+        </FocusTrap>,
+        document.body
+    );
+};
 
 export default Modal;

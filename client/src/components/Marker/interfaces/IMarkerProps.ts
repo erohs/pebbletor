@@ -1,4 +1,3 @@
-import { IMarkerData } from "./IMarkerData";
 import { IMarker } from "./IMarker";
 
 export interface IMarkerProps {
@@ -6,7 +5,7 @@ export interface IMarkerProps {
     line: any,
     marker: IMarker,
     markers: IMarker[],
-    selectedMarker: IMarkerData,
-    selectMarker: (marker: IMarker) => void,
+    selectedMarker: string,
+    selectMarker: (id: string) => void,
     updateMarker: (marker: IMarker) => void
 }

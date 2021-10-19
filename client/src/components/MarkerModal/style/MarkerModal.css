@@ -1,0 +1,21 @@
+.marker-modal__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+}
+
+.marker-modal__label {
+    margin-bottom: var(--s-padding);
+}
+
+.marker-modal__input {
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--secondary-bg-color);
+    margin-bottom: var(--l-padding);
+    padding: var(--m-padding);
+    color: var(--subtext-color);
+    width: 100%;
+}

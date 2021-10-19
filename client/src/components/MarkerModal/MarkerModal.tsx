@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import ModalContainer from "../Modal/ModalContainer";
+import { useState } from "react";
 import { Colour } from "../../util/ColourEnum";
 import { MarkerStatus } from "../Marker/util/MarkerStatusEnum";
 import { IMarker } from "../Marker/interfaces/IMarker";
 import { INewMarker } from "../Marker/interfaces/INewMarker";
-import { IMarkerFormProps } from "./interfaces/IMarkerFormProps";
-import "./style/MarkerForm.css";
+import { IMarkerModalProps } from "./interfaces/IMarkerModalProps";
+import { ModalType } from "../ModalSelector/util/ModalTypeEnum";
+import "./style/MarkerModal.css";
 
-const MarkerForm = (props: IMarkerFormProps) => {
+const MarkerModal = (props: IMarkerModalProps) => {
     const [name, setName] = useState(props.marker?.name || "");
     const [percentage, setPercentage] = useState(props.marker?.percentage || "50");
     const [colour, setColour] = useState(props.marker?.colour || Colour.Gray);
     const [status, setStatus] = useState(props.marker?.status || MarkerStatus.Active);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const handleSubmit = () => {
         const newMarker: INewMarker = {
             hillId: props.hillId,
             name,
@@ -26,40 +26,40 @@ const MarkerForm = (props: IMarkerFormProps) => {
             status,
         }
 
-        if (props.marker?._id) {
+        if (props.marker !== undefined) {
             const marker:IMarker = { 
                 ...newMarker,
-                _id: props.marker?._id,
-                createdAt: props.marker?.createdAt,
-                updatedAt: props.marker?.updatedAt
+                _id: props.marker._id,
+                createdAt: props.marker.createdAt,
+                updatedAt: props.marker.updatedAt
             };
             props.update(marker);
         } else props.add(newMarker);
 
-        props.selectModal("");
+        props.selectModal(ModalType.None);
     }
-
+    
     return (
-        <div>
-            <div className="modal-form__header">
-                <h2 className="modal-form__header-title">{props.title}</h2>
-                <button className="modal-form__header-close" onClick={() => props.selectModal("")}>x</button>
-            </div>
-            <form onSubmit={handleSubmit} className="modal-form__content">
-                <label className="modal-form__label">Marker name: </label>
+        <ModalContainer onSubmit={() => handleSubmit()}
+                        onClose={() => props.selectModal(ModalType.None)}
+                        isShown={true}
+                        trigger={props.buttonRef}
+                        text={{title: props.title, submit: "Save"}}>
+            <div className="marker-modal__content">
+                <label className="marker-modal__label">Marker name: </label>
                 <input type="text"
-                        className="modal-form__input"
+                        className="marker-modal__input"
                         required 
                         value={name}
                         onChange={(e) => setName(e.target.value)} />
-                <label className="modal-form__label">Marker percentage: </label>
+                <label className="marker-modal__label">Marker percentage: </label>
                 <input type="text"
-                        className="modal-form__input"
+                        className="marker-modal__input"
                         required
                         value={percentage}
                         onChange={(e) => setPercentage(e.target.value)} />
-                <label className="modal-form__label">Marker colour: </label>
-                <select className="modal-form__input"
+                <label className="marker-modal__label">Marker colour: </label>
+                <select className="marker-modal__input"
                         required
                         value={colour}
                         onChange={(e) => setColour(e.target.value)}>
@@ -67,8 +67,8 @@ const MarkerForm = (props: IMarkerFormProps) => {
                             return <option value={Colour[key]} style={{color: Colour[key]}}>{key}</option>;
                         })}
                 </select>
-                <label className="modal-form__label">Marker status: </label>
-                <select className="modal-form__input"
+                <label className="marker-modal__label">Marker status: </label>
+                <select className="marker-modal__input"
                         required
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}>
@@ -76,13 +76,9 @@ const MarkerForm = (props: IMarkerFormProps) => {
                             return <option value={MarkerStatus[key]}>{key}</option>;
                         })}
                 </select>
-                <div className="modal-form__content-buttons">
-                    <button className="modal-form__button" onClick={() => props.selectModal("")}>Cancel</button>
-                    <button className="modal-form__button save" type="submit">Save</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </ModalContainer>
     );
 }
 
-export default MarkerForm;
+export default MarkerModal;

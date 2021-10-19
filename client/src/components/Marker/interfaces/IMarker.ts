@@ -1,7 +1,6 @@
-import { IMarkerData } from "./IMarkerData";
 import { INewMarker } from "./INewMarker";
 
-export interface IMarker extends IMarkerData, INewMarker {
+export interface IMarker extends INewMarker {
     _id: string,
     hillId: string,
     name: string,
