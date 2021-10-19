@@ -2,10 +2,8 @@ const router = require('express').Router();
 let Hill = require('../models/hill');
 let Marker = require('../models/marker');
 
-router.route('/').get((req, res) => {
-    Hill.find()
-        .then(hills => res.json(hills))
-        .catch(error => res.status(400).json('Error: ' + error));
+router.route('/').all(paginatedResults(Hill)).get((req, res) => {
+    res.json(res.paginatedResults);
 });
 
 router.route('/').post((req, res) => {
@@ -35,7 +33,7 @@ router.route('/:id').delete((req, res) => {
         .catch(error => res.status(400).json('Error: ' + error));
     Marker.deleteMany({hillId: req.params.id})
         .then(() => res.json('Markers deleted.'))
-        .catch(error => res.status(400).json('Error: ' + error));
+        .catch(error => {});
 });
 
 router.route('/:id').post((req, res) => {
@@ -53,3 +51,36 @@ router.route('/:id').post((req, res) => {
 });
 
 module.exports = router;
+
+function paginatedResults(model) {
+    return async (req, res, next) => {
+        const page = parseInt(req.query.page);
+        const limit = parseInt( req.query.limit);
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const results = {}
+
+        if (endIndex < await model.countDocuments().exec()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+        
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        try {
+            results.results = await model.find().limit(limit).skip(startIndex).sort({updatedAt: -1}).exec();
+            res.paginatedResults = results;
+            next();
+        } catch (e) {
+            res.status(400).json('Error: ' + error);
+        }
+    }
+}

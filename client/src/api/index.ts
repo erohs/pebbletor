@@ -9,7 +9,7 @@ const baseUrl = 'https://pebbletor.herokuapp.com';
 const hillUrl = `${baseUrl}/hills`;
 const markerUrl = `${baseUrl}/markers`;
 
-export const fetchHills = () => axios.get(hillUrl);
+export const fetchHills = (page: number, limit: number) => axios.get(`${hillUrl}?page=${page}&limit=${limit}`);
 export const fetchHill = (id: string) => axios.get(`${hillUrl}/${id}`);
 export const createHill = (newHill: INewHill) => axios.post(hillUrl, newHill);
 export const updateHill = (id: string, updatedHill: IHill) => axios.post(`${hillUrl}/${id}`, updatedHill);
