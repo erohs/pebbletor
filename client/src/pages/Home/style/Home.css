@@ -57,8 +57,18 @@
 }
 
 .hill-card__delete {
+    padding-left: var(--m-padding);
     background: none;
     border: none;
+}
+
+.hill-card__edit svg {
+    fill: var(--text-color)
+}
+
+.hill-card__edit svg:hover {
+    cursor: pointer;
+    fill: var(--subtext-color);
 }
 
 .hill-card__delete svg {
