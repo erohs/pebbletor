@@ -65,7 +65,7 @@ class Home extends React.Component {
             <div className="home">
                 <div className="home__header">
                     <h1 className="home__title">Hill charts</h1>
-                    <input className="home__search" type="text" name="" id="" placeholder="Search"/>
+                    {/* <input className="home__search" type="text" name="" id="" placeholder="Search"/> */}
                 </div>
 
                 {this.state.hills.map((hill: IHill, index: number) => (

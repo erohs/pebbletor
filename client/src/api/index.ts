@@ -5,7 +5,7 @@ import { IMarker } from '../components/Marker/interfaces/IMarker';
 import { INewMarker } from '../components/Marker/interfaces/INewMarker';
 import { debounce } from '../util/HelperFunctions';
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://pebbletor.herokuapp.com';
 const hillUrl = `${baseUrl}/hills`;
 const markerUrl = `${baseUrl}/markers`;
 
