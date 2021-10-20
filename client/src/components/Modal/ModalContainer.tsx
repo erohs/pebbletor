@@ -41,7 +41,6 @@ class ModalContainer extends React.Component<IModalContainerProps> {
 
     componentDidUpdate() {
         if (this.props.isShown) {
-            this.closeRef.current!.focus();
             this.toggleScrollLock();
         }
     }

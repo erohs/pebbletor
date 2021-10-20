@@ -35,52 +35,81 @@ class Marker extends React.Component<IMarkerProps> {
     click = () => this.props.selectMarker(this.props.marker._id);
 
     componentDidMount() {
-        const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);
+        const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
+        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
+        const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
+        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
         let position = this.props.marker.currentPos;
+
         if (position.length === 0) {
             position = MarkerHelper.getPointAtPercentage(this.props.line, this.props.marker.percentage);
         }
 
-        const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
-        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
-
         if (inactiveIndex > -1) {
-            position = [110, 70 + (50 * (inactiveIndex ))]
+            position = [110, 50 + (30 * (inactiveIndex ))]
         }
-
-        const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
-        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
 
         if (completeIndex > -1) {
-            position = [1000, 70 + (50 * (completeIndex ))]
+            position = [1000, 50 + (30 * (completeIndex ))]
         }
-        
+
+        const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);
         let g = d3.select(this.markerRef.current)
-        .attr("transform", "translate(" + position + ")");
+            .attr("transform", "translate(" + position + ")");
 
         g.append("circle")
             .attr("r", 10)
             .style("fill", this.props.marker.colour)
             .call(drag);
 
-        g.append("text")
+        if (inactiveIndex > -1 || completeIndex > -1) {
+            g.append("text")
+            .attr("transform", "translate(" + [20, 5] + ")")
+            .text(this.props.marker.name);
+        } else {
+            g.append("text")
             .attr("transform", "translate(" + [-10, -20] + ")")
             .text(this.props.marker.name);
+        }
 
         g.on("click", this.click);
     }
 
     componentDidUpdate() {
-        const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);
-        let g = d3.select(this.markerRef.current);
+        const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
+        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
+        const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
+        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
+        let position = this.props.marker.currentPos;
 
+        if (inactiveIndex > -1) {
+            position = [110, 50 + (30 * (inactiveIndex ))]
+        }
+
+        if (completeIndex > -1) {
+            position = [1000, 50 + (30 * (completeIndex ))]
+        }
+
+        if (this.props.marker.currentPos.length !== 0) {
+            if (this.props.marker.isNewPercentage) {
+                position = MarkerHelper.getPointAtPercentage(this.props.line, this.props.marker.percentage);
+            }
+        }
+
+        this.props.marker.currentPos = position;
+        this.props.marker.isNewPercentage = false;
+
+        const drag = d3.drag<SVGCircleElement, unknown>().on("drag", this.drag);
+        let g = d3.select(this.markerRef.current)
+            .attr("transform", "translate(" + position + ")");
+        
         g.selectAll("text").remove();
         g.selectAll("circle").remove();
 
         g.append("circle")
-                .attr("r", 10)
-                .style("fill", this.props.marker.colour)
-                .call(drag);
+            .attr("r", 10)
+            .style("fill", this.props.marker.colour)
+            .call(drag);
 
         if (this.props.marker._id === this.props.selectedMarker) {
             g.append("circle")
@@ -89,39 +118,18 @@ class Marker extends React.Component<IMarkerProps> {
                 .style("fill", "none")
                 .style("stroke-width", 2)
         }
-
-        g.append("text")
+        
+        if (inactiveIndex > -1 || completeIndex > -1) {
+            g.append("text")
+            .attr("transform", "translate(" + [20, 5] + ")")
+            .text(this.props.marker.name);
+        } else {
+            g.append("text")
             .attr("transform", "translate(" + [-10, -20] + ")")
             .text(this.props.marker.name);
-
-        const inactive = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Inactive);
-        const inactiveIndex = inactive.findIndex((m: IMarker) => m._id === this.props.marker._id);
-        let position = this.props.marker.currentPos;
-
-        if (inactiveIndex > -1) {
-            position = [110, 70 + (50 * (inactiveIndex ))]
         }
 
-        const complete = this.props.markers.filter((m: IMarker) => m.status === MarkerStatus.Complete);
-        const completeIndex = complete.findIndex((m: IMarker) => m._id === this.props.marker._id);
-
-        if (completeIndex > -1) {
-            position = [1000, 70 + (50 * (completeIndex ))]
-        }
-
-        if (this.props.marker.currentPos.length !== 0) {
-            if (this.props.marker.isNewPercentage) {
-                position = MarkerHelper.getPointAtPercentage(this.props.line, this.props.marker.percentage);
-            }
-
-            g.attr(
-                "transform",
-                "translate(" + position + ")"
-            );
-        }
-
-        this.props.marker.currentPos = position;
-        this.props.marker.isNewPercentage = false;
+        g.on("click", this.click);
     }
 
     render() {
