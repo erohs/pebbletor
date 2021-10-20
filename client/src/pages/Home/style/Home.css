@@ -5,10 +5,25 @@
     padding-bottom: var(--l-padding);
 }
 
-.home__title {
-    font-size: 1.5em;
+.home__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: var(--m-padding) 0;
     border-bottom: 1px solid var(--border-color);
+}
+
+.home__title {
+    font-size: 1.5em;
+}
+
+.home__search {
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--secondary-bg-color);
+    padding: var(--m-padding);
+    color: var(--subtext-color);
+    min-width: 290px;
 }
 
 .card {
@@ -26,7 +41,7 @@
 .hill-card__link {
     color: var(--text-color);
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .hill-card__link:hover {
@@ -58,7 +73,7 @@
 }
 
 .hill-card__delete {
-    padding-left: var(--m-padding);
+    margin-left: var(--m-padding);
     background: none;
     border: none;
 }
