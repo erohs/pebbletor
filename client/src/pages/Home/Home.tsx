@@ -22,7 +22,6 @@ class Home extends React.Component {
     componentDidMount() {
         fetchHills(1, 4)
             .then(res => {
-                console.log(res.data);
                 this.setState({ 
                     hills: [...this.state.hills, ...res.data.results],
                     nextPage: res.data.next,
@@ -64,11 +63,15 @@ class Home extends React.Component {
     render() {
         return (
             <div className="home">
-                <h1 className="home__title">Showing all hill charts</h1>
+                <div className="home__header">
+                    <h1 className="home__title">Hill charts</h1>
+                    <input className="home__search" type="text" name="" id="" placeholder="Search"/>
+                </div>
+
                 {this.state.hills.map((hill: IHill, index: number) => (
                     <div key={index} className="card hill-card">
                         <Link to={`/hill/${hill._id}`} className="hill-card__link">
-                            <h1>{hill.name}</h1>
+                            <h2>{hill.name}</h2>
                         </Link>
                         <p className="hill-card__author">by {hill.author}</p>
                         <p className="hill-card__description">{hill.description}</p>

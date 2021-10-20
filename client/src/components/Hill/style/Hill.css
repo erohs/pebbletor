@@ -12,7 +12,8 @@
 .hill__subtitle {
     width: 60%;
     color: var(--subtext-color);
-    margin: auto;
+    margin: 0 auto;
+    margin-bottom: var(--l-padding);
 }
 
 #hill__path {
