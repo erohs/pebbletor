@@ -23,7 +23,11 @@ class ModalContainer extends React.Component<IModalContainerProps> {
     };
     
     onClickOutside = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        if (this.modalRef.current && event.target instanceof HTMLElement && this.modalRef.current.contains(event.target)) return
+        if (this.modalRef.current && 
+            (event.target instanceof HTMLElement || event.target instanceof SVGElement) &&
+            this.modalRef.current.contains(event.target)) {
+            return
+        }
         this.closeModal();
     };
 
