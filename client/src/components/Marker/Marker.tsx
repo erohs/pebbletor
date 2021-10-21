@@ -6,11 +6,6 @@ import "./style/Marker.css";
 
 class Marker extends React.Component<IMarkerProps> {
     private markerRef = React.createRef<SVGGElement>();
-    constructor(props: IMarkerProps) {
-        super(props);
-        this.drag = this.drag.bind(this);
-        this.click = this.click.bind(this);
-    }
 
     drag = (event: any) => MarkerHelper.onDrag(this.props, event);
 

@@ -7,6 +7,7 @@ import { INewMarker } from "../Marker/interfaces/INewMarker";
 import { IMarkerModalProps } from "./interfaces/IMarkerModalProps";
 import { ModalType } from "../ModalSelector/util/ModalTypeEnum";
 import "./style/MarkerModal.css";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 const MarkerModal = (props: IMarkerModalProps) => {
     const [name, setName] = useState(props.marker?.name || "");
@@ -46,6 +47,10 @@ const MarkerModal = (props: IMarkerModalProps) => {
                         trigger={props.buttonRef}
                         text={{title: props.title, submit: "Save"}}>
             <div className="marker-modal__content">
+                <label className="marker-modal__label">Marker image (optional): </label>
+                <div className="marker-modal__image">
+                    <ImageUpload id="marker-modal__upload" alt="marker image" />
+                </div>
                 <label className="marker-modal__label">Marker name: </label>
                 <input type="text"
                         className="marker-modal__input"
