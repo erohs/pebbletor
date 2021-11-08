@@ -2,11 +2,10 @@ text {
     fill: var(--text-color);
 }
 
-circle {
+circle, image {
     cursor: pointer;
 }
 
 .selected-marker {
     stroke: var(--accent-bg-color);
 }
- 

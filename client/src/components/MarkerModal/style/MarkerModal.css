@@ -10,10 +10,6 @@
     margin-bottom: var(--s-padding);
 }
 
-.marker-modal__image {
-    width: 100%;
-}
-
 .marker-modal__input {
     border: none;
     border-radius: var(--border-radius);

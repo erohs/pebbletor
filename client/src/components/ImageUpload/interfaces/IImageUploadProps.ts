@@ -1,5 +1,6 @@
 export interface IImageUploadProps {
     id: string,
     alt: string,
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    imagePath: string | undefined,
+    onChange?: (file: File | null) => void
 }

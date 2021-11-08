@@ -1,43 +1,64 @@
 import React from "react";
-import blank from "../../images/blank.png";
-import DeleteIcon from "../Icons/DeleteIcon";
+import { baseUrl } from "../../api";
+import { validImageTypes } from "../../util/ValidImageTypes";
+import ImageIcon from "../Icons/ImageIcon";
+import UploadIcon from "../Icons/UploadIcon";
 import { IImageUploadProps } from "./interfaces/IImageUploadProps";
 import { IImageUploadState } from "./interfaces/IImageUploadState";
 import "./style/ImageUpload.css";
 
 class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> {
+    private inputRef = React.createRef<HTMLInputElement>()
+
     state = {
         id: this.props.id,
-        imageURI: blank,
-        hasImage: false
+        imageURI: "",
+        hasImage: this.props.imagePath ? true : false,
+        fileName: ""
     }
 
     createImage = () => {
-        let img = null;
-        if (this.state.imageURI !== null) {
-            img = <img className="image-upload__image" src={this.state.imageURI} alt={this.props.alt}/>
+        if (this.state.imageURI !== "") {
+            return <img className="image-upload__image" src={this.state.imageURI} alt={this.props.alt}/>
         }
-        return img;
+        if (this.props.imagePath !== undefined) {
+            return <img className="image-upload__image" src={`${baseUrl}/${this.props.imagePath}`} alt={this.props.alt}/>
+        }
+        return null;
     }
 
     removeImage = () => {
-        this.setState({imageURI: blank, hasImage: false})
-    }
-
-    readURI = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]){
-            let reader = new FileReader();
-            reader.onload = (e: ProgressEvent<FileReader>) =>{
-                this.setState({imageURI:e.target!.result, hasImage: true});
-            }
-            reader.readAsDataURL(event.target.files[0]);
+        this.inputRef.current!.value = "";
+        this.setState({imageURI: "", hasImage: false, fileName: ""});
+        if (this.props.onChange !== undefined) {
+            this.props.onChange(null);
         }
     }
 
+    readURI = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) =>{
+            this.setState({imageURI:e.target!.result, hasImage: true, fileName: event.target.value.replace(/.*[/\\]/, '')});
+        }
+        reader.readAsDataURL(event.target.files![0]);
+    }
+
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.readURI(event);
-        if (this.props.onChange !== undefined) {
-            this.props.onChange(event);
+        if (event.target.files && event.target.files[0]){
+            const fileType = event.target.files[0].type;
+            if (validImageTypes.includes(fileType)) {
+                this.readURI(event);
+                if (this.props.onChange !== undefined) {
+                    this.props.onChange(event.target.files[0]);
+                }
+            }
+        }
+    }
+
+    handleKeyUp = (event: React.KeyboardEvent<HTMLLabelElement>) => {
+        event.preventDefault();
+        if (event.key === "Enter") {
+            this.inputRef.current!.click();
         }
     }
 
@@ -46,20 +67,29 @@ class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> 
 
         return (
             <div className="image-upload">
-               <label className="image-upload__button" htmlFor={this.state.id}>Upload</label>
-               <input className="hide-visual"
-                      type="file"
-                      id={this.state.id}
-                      onChange={event => this.handleChange(event)}/>
                 <div className="image-upload__preview">
+                    <ImageIcon className="image-upload__placeholder" />
                     {imgTag}
-                    {this.state.hasImage ? (
-                        <button className="image-upload__remove" onClick={() => this.removeImage()}>
-                            <DeleteIcon className="image-upload__remove-icon"/>
-                        </button>
-                    ) : null }
-                    
                 </div>
+                <label className="image-upload__text" htmlFor={this.state.id}>{this.state.fileName}</label>
+                {this.state.hasImage ? (
+                    <button className="image-upload__remove" onClick={() => this.removeImage()}>
+                        &#215;
+                    </button>
+                ) : null }
+                <label className="image-upload__button" 
+                       tabIndex={0}
+                       htmlFor={this.state.id}
+                       onKeyUp={event => this.handleKeyUp(event)}>
+                    <UploadIcon className="image-upload__icon" />
+                </label>
+                <input className="hide-visual"
+                       name="image"
+                       tabIndex={-1}
+                       ref={this.inputRef}
+                       type="file"
+                       id={this.state.id}
+                       onChange={event => this.handleChange(event)}/>
             </div>
         );
     }

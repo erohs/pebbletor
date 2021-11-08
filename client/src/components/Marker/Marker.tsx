@@ -28,9 +28,11 @@ class Marker extends React.Component<IMarkerProps> {
         const position = MarkerHelper.getPosition(this.props, index);
         let g = select(this.markerRef.current);
 
-        this.props.marker.currentPos = position;
+        this.props.marker.x = position.x;
+        this.props.marker.y = position.y;
         this.props.marker.isNewPercentage = false;
 
+        g.selectAll("image").remove();
         g.selectAll("text").remove();
         g.selectAll("circle").remove();
 

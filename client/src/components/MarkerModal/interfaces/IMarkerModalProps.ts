@@ -1,13 +1,12 @@
 import React from "react";
 import { IMarker } from "../../Marker/interfaces/IMarker";
-import { INewMarker } from "../../Marker/interfaces/INewMarker";
 
 export interface IMarkerModalProps {
     title: string,
     hillId: string,
     marker?: IMarker,
     buttonRef: React.RefObject<HTMLButtonElement>
-    add: (marker: INewMarker) => void,
-    update: (marker: IMarker) => void,
+    add: (marker: FormData) => void,
+    update: (id: string, marker: FormData) => void,
     selectModal: (modal: string) => void
 }

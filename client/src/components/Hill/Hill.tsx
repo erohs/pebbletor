@@ -15,6 +15,13 @@ class Hill extends React.Component<IHillProps, IHillState> {
     componentDidMount() {
         const line = d3.line().curve(d3.curveCatmullRom);
         const svg: any = d3.select("#hill__svg");
+        const defs = svg.append("defs");
+        defs.append("clipPath")
+            .attr("id", "avatar-clip")
+            .append("circle")
+            .attr("cx", 13)
+            .attr("cy", 13)
+            .attr("r", 12)
         svg.on("click", this.props.deselectMarker);
         const path = svg
             .append("path")
