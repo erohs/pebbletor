@@ -8,6 +8,7 @@ const uri = process.env.ATLAS_URI;
 const app = express();
 app.use(require('cors')());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use('/hills', require('./routes/hills'));
 app.use('/markers', require('./routes/markers'));
 

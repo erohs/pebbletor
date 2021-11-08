@@ -1,14 +1,16 @@
+import { ICoord } from "../../../util/ICoord";
 import { IMarker } from "../interfaces/IMarker";
 import { IMarkerProps } from "../interfaces/IMarkerProps";
 import { IMarkerStatusIndex } from "../interfaces/IMarkerStatusIndex";
 import { MarkerStatus } from "./MarkerStatusEnum";
 import * as d3 from "d3";
+import { baseUrl } from "../../../api";
 
 export class MarkerHelper {
     static getPointAtPercentage = (pathNode: SVGPathElement, percentage: number) => {
         const length = (pathNode.getTotalLength() / 100) * percentage;
         const svgPoint = pathNode.getPointAtLength(length);
-        return [svgPoint.x, svgPoint.y];
+        return {x: svgPoint.x, y: svgPoint.y};
     }
 
     static getClosestPoint = (pathNode: SVGPathElement, point: [number, number]) => {
@@ -37,8 +39,10 @@ export class MarkerHelper {
                 precision /= 2;
             }
         }
-
-        best = [best?.x, best?.y];
+        if (best !== undefined ) {
+            best = {x: best.x, y: best.y};
+        }
+        
         return best;
 
         function distance2(p: { x: number, y: number }) {
@@ -63,17 +67,17 @@ export class MarkerHelper {
     }
 
     static getPosition = (props: IMarkerProps, index: IMarkerStatusIndex) => {
-        let position = props.marker.currentPos;
+        let position: ICoord = {x: props.marker.x, y: props.marker.y};
 
-        if (position.length === 0) {
+        if (position.x === undefined || position.y === undefined) {
             if (props.marker.isNewPercentage) {
                 position = MarkerHelper.getPointAtPercentage(props.line, props.marker.percentage);
             }
         } else {
             if (index.inactive > -1) {
-                position = [110, 50 + (30 * (index.inactive))]
+                position = {x: 110, y: 50 + (30 * (index.inactive))};
             } else if (index.complete > -1) {
-                position = [1000, 50 + (30 * (index.complete))]
+                position = {x: 1000, y: 50 + (30 * (index.complete))};
             }
         }
 
@@ -87,10 +91,11 @@ export class MarkerHelper {
   
             const p = MarkerHelper.getClosestPoint(props.line, m);
             let newMarker = {...props.marker};
-            newMarker.currentPos = p as number[];
-            if (p[0] as number < 101) {
+            newMarker.x = p!.x;
+            newMarker.y = p!.y;
+            if (p!.x as number < 101) {
                 newMarker.status = MarkerStatus.Inactive;
-            } else if (p[0] as number > 1099) {
+            } else if (p!.x as number > 1099) {
                 newMarker.status = MarkerStatus.Complete
             } else {
                 newMarker.status = MarkerStatus.Active
@@ -106,10 +111,11 @@ export class MarkerHelper {
   
             const p = MarkerHelper.getClosestPoint(props.line, m);
             let newMarker = {...props.marker};
-            newMarker.currentPos = p as number[];
-            if (p[0] as number < 101) {
+            newMarker.x = p!.x;
+            newMarker.y = p!.y;
+            if (p!.x as number < 101) {
                 newMarker.status = MarkerStatus.Inactive;
-            } else if (p[0] as number > 1099) {
+            } else if (p!.x as number > 1099) {
                 newMarker.status = MarkerStatus.Complete
             } else {
                 newMarker.status = MarkerStatus.Active
@@ -122,22 +128,36 @@ export class MarkerHelper {
             props: IMarkerProps,
             g: d3.Selection<SVGGElement | null, unknown, null, undefined>,
             index: IMarkerStatusIndex,
-            position: number[],
+            position: ICoord,
             drag: (event: any) => void,
             touch: (event: any) => void
         ) => {
-        const d3Drag = d3.drag<SVGCircleElement, unknown>().on("drag", drag).touchable(false);
+        
         g.on("touchmove", touch);
 
-        g.attr("transform", "translate(" + position + ")");
-        g.append("circle")
-            .attr("r", 10)
-            .style("fill", props.marker.colour)
-            .call(d3Drag);
+        g.attr("transform", `translate(${[position.x, position.y]})`);
+        
+        if (props.marker.imagePath !== undefined) {
+            const d3Drag = d3.drag<SVGImageElement, unknown>().on("drag", drag).touchable(false);
+            g.append("image")
+                .attr('width', 26)
+                .attr('height', 26)
+                .attr("class", "image-marker")
+                .attr("transform", "translate(" + [-13, -13] + ")")
+                .attr("xlink:href", `${baseUrl}/${props.marker.imagePath}`)
+                .attr("clip-path", "url(#avatar-clip)")
+                .call(d3Drag);
+        } else {
+            const d3Drag = d3.drag<SVGCircleElement, unknown>().on("drag", drag).touchable(false);
+            g.append("circle")
+                .attr("r", 13)
+                .style("fill", props.marker.colour)
+                .call(d3Drag);
+        }
 
         if (props.marker._id === props.selectedMarker) {
             g.append("circle")
-                .attr("r", 12)
+                .attr("r", 14)
                 .attr("class", "selected-marker")
                 .style("fill", "none")
                 .style("stroke-width", 2);

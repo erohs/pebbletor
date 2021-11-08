@@ -1,5 +1,6 @@
 export interface IImageUploadState {
     id: string,
     imageURI: string | ArrayBuffer | null,
-    hasImage: boolean
+    hasImage: boolean,
+    fileName: string
 }
