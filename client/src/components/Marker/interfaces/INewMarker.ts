@@ -3,7 +3,8 @@ export interface INewMarker {
     name: string,
     percentage: number,
     isNewPercentage: boolean,
-    currentPos: number[],
+    x: number,
+    y: number,
     colour: string,
     status: string
 }

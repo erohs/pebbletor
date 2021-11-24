@@ -2,10 +2,9 @@ import axios from 'axios';
 import { IHill } from '../components/Hill/interfaces/IHill';
 import { INewHill } from '../components/Hill/interfaces/INewHill';
 import { IMarker } from '../components/Marker/interfaces/IMarker';
-import { INewMarker } from '../components/Marker/interfaces/INewMarker';
 import { debounce } from '../util/HelperFunctions';
 
-const baseUrl = 'https://pebbletor.herokuapp.com';
+export const baseUrl = 'https://pebbletor.herokuapp.com';
 const hillUrl = `${baseUrl}/hills`;
 const markerUrl = `${baseUrl}/markers`;
 
@@ -17,8 +16,8 @@ export const deleteHill = (id: string) => axios.delete(`${hillUrl}/${id}`);
 
 export const fetchHillMarkers = (hillId: string) => axios.get(`${markerUrl}/hill/${hillId}`);
 export const fetchMarker = (id: string) => axios.get(`${markerUrl}/${id}`);
-export const createMarker = (newMarker: INewMarker) => axios.post(markerUrl, newMarker);
-export const updateMarker = (id: string, updatedMarker: IMarker) => axios.post(`${markerUrl}/${id}`, updatedMarker);
+export const createMarker = (newMarker: FormData) => axios.post(markerUrl, newMarker);
+export const updateMarker = (id: string, updatedMarker: FormData, isNewImage: boolean) => axios.post(`${markerUrl}/${id}?isnewimage=${isNewImage}`, updatedMarker);
 export const deleteMarker = (id: string) => axios.delete(`${markerUrl}/${id}`);
 export const debounceUpdateMarker = debounce((id: string, updatedMarker: IMarker) => {
     axios.post(`${markerUrl}/${id}`, updatedMarker);

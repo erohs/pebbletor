@@ -7,6 +7,7 @@ export interface IModalProps {
     className?: string,
     onSubmit: () => void;
     closeModal: () => void;
+    manualClose: Boolean,
     onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => void;
     onClickOutside: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }

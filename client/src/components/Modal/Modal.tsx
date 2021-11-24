@@ -13,7 +13,7 @@ const Modal : React.FC<IModalProps> = props => {
                    tabIndex={-1}
                    aria-modal="true"
                    className="modal"
-                   onClick={event => props.onClickOutside(event)}
+                   onMouseDown={event => props.onClickOutside(event)}
                    onKeyDown={event => props.onKeyDown(event)}>
                 <div className="modal__card" ref={props.modalRef}>
                     <div className="modal__header"> 
@@ -22,7 +22,7 @@ const Modal : React.FC<IModalProps> = props => {
                                 className="modal__header-close"
                                 aria-label="Close Modal"
                                 aria-labelledby="close-modal"
-                                onClick={() => props.closeModal()}>x</button>
+                                onClick={() => props.closeModal()}>×</button>
                         <span id="close-modal" className="hide-visual">
                             Close
                         </span>
@@ -33,7 +33,9 @@ const Modal : React.FC<IModalProps> = props => {
                         <button className={classname} 
                                 onClick={() => {
                                     props.onSubmit()
-                                    props.closeModal()
+                                    if (!props.manualClose) {
+                                        props.closeModal()
+                                    }
                                 }}>{props.text.submit}</button>
                     </div>
                 </div>

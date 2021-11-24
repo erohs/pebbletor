@@ -7,6 +7,7 @@ import { IMarker } from "../Marker/interfaces/IMarker";
 import { IToolbarProps } from "./interfaces/IToolbarProps";
 import { IToolbarStatus } from "./interfaces/IToolbarStatus";
 import { ModalType } from "../ModalSelector/util/ModalTypeEnum";
+import { baseUrl } from "../../api";
 import "./style/Toolbar.css";
 
 class Toolbar extends React.Component<IToolbarProps, IToolbarStatus> {
@@ -79,7 +80,12 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarStatus> {
                                     <button className="dropdown__item"
                                             onClick={() => this.openEditModal(marker._id)}
                                             key={index}>
-                                        <div style={{backgroundColor: marker.colour}} className="dropdown__marker"></div>{marker.name}
+                                        { marker.imagePath ? 
+                                            <img src={`${baseUrl}/${marker.imagePath}`} className="dropdown__marker" alt="marker"/> : 
+                                            <div style={{backgroundColor: marker.colour}} className="dropdown__marker" />
+                                        }
+                                        {marker.name}
+                                        
                                     </button>
                                 ))}
                             </div>

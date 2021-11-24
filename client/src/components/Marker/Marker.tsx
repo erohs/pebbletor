@@ -6,11 +6,6 @@ import "./style/Marker.css";
 
 class Marker extends React.Component<IMarkerProps> {
     private markerRef = React.createRef<SVGGElement>();
-    constructor(props: IMarkerProps) {
-        super(props);
-        this.drag = this.drag.bind(this);
-        this.click = this.click.bind(this);
-    }
 
     drag = (event: any) => MarkerHelper.onDrag(this.props, event);
 
@@ -33,9 +28,11 @@ class Marker extends React.Component<IMarkerProps> {
         const position = MarkerHelper.getPosition(this.props, index);
         let g = select(this.markerRef.current);
 
-        this.props.marker.currentPos = position;
+        this.props.marker.x = position.x;
+        this.props.marker.y = position.y;
         this.props.marker.isNewPercentage = false;
 
+        g.selectAll("image").remove();
         g.selectAll("text").remove();
         g.selectAll("circle").remove();
 

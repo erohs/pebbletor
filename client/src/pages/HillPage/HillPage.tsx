@@ -2,11 +2,10 @@ import React from "react";
 import Hill from "../../components/Hill/Hill";
 import Toolbar from "../../components/Toolbar/Toolbar";
 import { IMarker } from "../../components/Marker/interfaces/IMarker";
-import { INewMarker } from "../../components/Marker/interfaces/INewMarker";
 import { IHillPageProps } from "./interfaces/IHillPageProps"
 import { IHillPageState } from "./interfaces/IHillPageState";
 import { hillPlaceholder } from "../../components/Hill/util/hillPlaceholder";
-import { createMarker, debounceUpdateMarker, deleteMarker, fetchHill, fetchHillMarkers } from "../../api";
+import { createMarker, debounceUpdateMarker, deleteMarker, fetchHill, fetchHillMarkers, updateMarker } from "../../api";
 import "./style/HillPage.css";
 
 class HillPage extends React.Component<IHillPageProps, IHillPageState> {
@@ -33,13 +32,25 @@ class HillPage extends React.Component<IHillPageProps, IHillPageState> {
         this.setState({isMarkerClick: false});
     }
 
-    addMarker = (marker: INewMarker) => {
-        createMarker(marker)
-            .then((res) => {
+    addMarker = (formData: FormData) => {
+        createMarker(formData)
+            .then(res => {
                 this.setState({markers: [...this.state.markers, res.data]}, () => {
                     this.update();
                 });
             });
+    }
+
+    updateMarkerWithForm = (id: string, formData: FormData, isNewImage: boolean) => {
+        updateMarker(id, formData, isNewImage)
+            .then(res => {
+                let newMarkers: IMarker[] = [...this.state.markers];
+                const index = newMarkers.findIndex(m => m._id === res.data._id);
+                newMarkers[index] = res.data;
+                this.setState({markers: newMarkers}, () => {
+                    this.update();
+                });
+            })
     }
 
     updateMarker = (marker: IMarker) => {
@@ -48,7 +59,7 @@ class HillPage extends React.Component<IHillPageProps, IHillPageState> {
         newMarkers[index] = marker;
         this.setState({markers: newMarkers}, () => {
             this.update();
-            debounceUpdateMarker(marker._id, marker)
+            debounceUpdateMarker(marker._id, marker);
         });
     }
         
@@ -78,7 +89,7 @@ class HillPage extends React.Component<IHillPageProps, IHillPageState> {
                          hillId={this.props.id}
                          selectMarker={this.selectMarker}
                          add={this.addMarker}
-                         update={this.updateMarker}
+                         update={this.updateMarkerWithForm}
                          delete={this.deleteMarker} />
             </>
         );
