@@ -106,8 +106,8 @@
 }
 
 .dropdown__marker {
-    width: 14px;
-    height: 14px;
+    width: 1em;
+    height: 1em;
     border-radius: 100%;
     margin-right: var(--s-padding);
 }

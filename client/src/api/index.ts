@@ -17,7 +17,7 @@ export const deleteHill = (id: string) => axios.delete(`${hillUrl}/${id}`);
 export const fetchHillMarkers = (hillId: string) => axios.get(`${markerUrl}/hill/${hillId}`);
 export const fetchMarker = (id: string) => axios.get(`${markerUrl}/${id}`);
 export const createMarker = (newMarker: FormData) => axios.post(markerUrl, newMarker);
-export const updateMarker = (id: string, updatedMarker: FormData) => axios.post(`${markerUrl}/${id}`, updatedMarker);
+export const updateMarker = (id: string, updatedMarker: FormData, isNewImage: boolean) => axios.post(`${markerUrl}/${id}?isnewimage=${isNewImage}`, updatedMarker);
 export const deleteMarker = (id: string) => axios.delete(`${markerUrl}/${id}`);
 export const debounceUpdateMarker = debounce((id: string, updatedMarker: IMarker) => {
     axios.post(`${markerUrl}/${id}`, updatedMarker);

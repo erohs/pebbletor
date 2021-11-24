@@ -3,8 +3,8 @@ import { IMarker } from "../interfaces/IMarker";
 import { IMarkerProps } from "../interfaces/IMarkerProps";
 import { IMarkerStatusIndex } from "../interfaces/IMarkerStatusIndex";
 import { MarkerStatus } from "./MarkerStatusEnum";
-import * as d3 from "d3";
 import { baseUrl } from "../../../api";
+import * as d3 from "d3";
 
 export class MarkerHelper {
     static getPointAtPercentage = (pathNode: SVGPathElement, percentage: number) => {
@@ -84,6 +84,23 @@ export class MarkerHelper {
         return position;
     }
 
+    static stackMarker = (marker: IMarker, markers: IMarker[]) => {
+        const newMarker = marker;
+        const stackedRange = 30;
+        const stackedMarkers = markers.filter(m => m.x >= newMarker.x - stackedRange && m.x <= newMarker.x + stackedRange && m._id !== newMarker._id);
+        if (stackedMarkers.length > 0) {
+            let y = 0;
+            for (let m of stackedMarkers) {
+                if (m.y > y) {
+                    y = y + 50;
+                }
+            }
+            newMarker.y = newMarker.y - y;
+        }
+
+        return newMarker;
+    }
+
     static onDrag = (props: IMarkerProps, event: any) => {
         if (props.selectedMarker !== undefined && props.marker._id === props.selectedMarker) {
             const node = props.svg;
@@ -93,13 +110,16 @@ export class MarkerHelper {
             let newMarker = {...props.marker};
             newMarker.x = p!.x;
             newMarker.y = p!.y;
-            if (p!.x as number < 101) {
+            if (p!.x < 101) {
                 newMarker.status = MarkerStatus.Inactive;
-            } else if (p!.x as number > 1099) {
+            } else if (p!.x > 1099) {
                 newMarker.status = MarkerStatus.Complete
             } else {
                 newMarker.status = MarkerStatus.Active
             }
+
+            newMarker = MarkerHelper.stackMarker(newMarker, props.markers);
+
             props.updateMarker(newMarker);
         }
     }
@@ -113,13 +133,14 @@ export class MarkerHelper {
             let newMarker = {...props.marker};
             newMarker.x = p!.x;
             newMarker.y = p!.y;
-            if (p!.x as number < 101) {
+            if (p!.x < 101) {
                 newMarker.status = MarkerStatus.Inactive;
-            } else if (p!.x as number > 1099) {
+            } else if (p!.x > 1099) {
                 newMarker.status = MarkerStatus.Complete
             } else {
                 newMarker.status = MarkerStatus.Active
             }
+            
             props.updateMarker(newMarker);
         }
     }
@@ -145,12 +166,13 @@ export class MarkerHelper {
                 .attr("class", "image-marker")
                 .attr("transform", "translate(" + [-13, -13] + ")")
                 .attr("xlink:href", `${baseUrl}/${props.marker.imagePath}`)
+                .attr('preserveAspectRatio', "none")
                 .attr("clip-path", "url(#avatar-clip)")
                 .call(d3Drag);
         } else {
             const d3Drag = d3.drag<SVGCircleElement, unknown>().on("drag", drag).touchable(false);
             g.append("circle")
-                .attr("r", 13)
+                .attr("r", 12)
                 .style("fill", props.marker.colour)
                 .call(d3Drag);
         }
@@ -169,7 +191,7 @@ export class MarkerHelper {
             .text(props.marker.name);
         } else {
             g.append("text")
-            .attr("transform", "translate(" + [-10, -20] + ")")
+            .attr("transform", "translate(" + [-13, -20] + ")")
             .text(props.marker.name);
         }
     }

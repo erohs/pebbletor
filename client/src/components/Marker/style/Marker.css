@@ -9,3 +9,9 @@ circle, image {
 .selected-marker {
     stroke: var(--accent-bg-color);
 }
+
+.image-marker {
+    min-width: 26px;
+    min-height: 26px;
+    object-fit: stretch;
+}

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fs = require('fs').promises;
 const multer = require('multer');
 const path = require('path');
 let Marker = require('../models/marker');
@@ -7,7 +8,7 @@ let Hill = require('../models/hill');
 const storage = multer.diskStorage({
     destination: "./uploads",
     filename: function(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now() + path.extname(file.originalname)}`);
+        cb(null, `${file.fieldname}-${Date.now()}.png`);
     }
 });
 
@@ -68,7 +69,12 @@ router.route('/:id').delete((req, res) => {
                 })
                 .catch(error => res.status(400).json('Error: ' + error));
             Marker.deleteOne({_id: req.params.id})
-                .then(() => res.json('Marker deleted.'))
+                .then(() => {
+                    if (marker.imagePath) {
+                        fs.unlink(marker.imagePath);
+                    }
+                    res.json('Marker deleted.')
+                })
                 .catch(error => res.status(400).json('Error: ' + error));
         })
         .catch(error => res.status(400).json('Error: ' + error));
@@ -91,6 +97,12 @@ router.route('/:id').all(upload).post((req, res) => {
             marker.y = req.body.y;
             marker.colour = req.body.colour;
             let imagePath = req.body.imagePath;
+            if (req.query.isnewimage === "true") {
+                if (req.body.imagePath) {
+                    fs.unlink(req.body.imagePath);
+                }
+                imagePath = undefined;
+            }
             if (req.file !== undefined) {
                 imagePath = req.file.path;
             }

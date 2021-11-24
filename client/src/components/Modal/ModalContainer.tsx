@@ -56,6 +56,7 @@ class ModalContainer extends React.Component<IModalContainerProps> {
                    closeRef={this.closeRef}
                    text={this.props.text}
                    className={this.props.className}
+                   manualClose={this.props.manualClose}
                    closeModal={this.closeModal}
                    onKeyDown={this.onKeyDown}
                    onClickOutside={this.onClickOutside}>

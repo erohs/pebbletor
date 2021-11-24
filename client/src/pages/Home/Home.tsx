@@ -99,6 +99,7 @@ class Home extends React.Component {
                 ) : null }
                 <ModalContainer onSubmit={() => this.deleteHill(this.state.hill!._id)}
                                 onClose={() => this.deselectHill()}
+                                manualClose={false}
                                 isShown={this.state.showModal}
                                 text={{title: "Delete Hill", submit: "Delete"}}
                                 className="delete">

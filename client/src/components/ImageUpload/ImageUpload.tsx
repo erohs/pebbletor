@@ -13,16 +13,18 @@ class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> 
     state = {
         id: this.props.id,
         imageURI: "",
-        hasImage: this.props.imagePath ? true : false,
-        fileName: ""
+        hasImage: this.props.imagePath && !this.props.isNewImage ? true : false,
+        fileName: this.props.imagePath ? this.props.imagePath.slice(8) : ""
     }
 
     createImage = () => {
-        if (this.state.imageURI !== "") {
-            return <img className="image-upload__image" src={this.state.imageURI} alt={this.props.alt}/>
-        }
-        if (this.props.imagePath !== undefined) {
-            return <img className="image-upload__image" src={`${baseUrl}/${this.props.imagePath}`} alt={this.props.alt}/>
+        if(this.state.hasImage) {
+            if (this.state.imageURI !== "") {
+                return <img className="image-upload__image" src={this.state.imageURI} alt={this.props.alt}/>
+            }
+            if (this.props.imagePath !== undefined) {
+                return <img className="image-upload__image" src={`${baseUrl}/${this.props.imagePath}`} alt={this.props.alt}/>
+            }
         }
         return null;
     }
@@ -32,6 +34,7 @@ class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> 
         this.setState({imageURI: "", hasImage: false, fileName: ""});
         if (this.props.onChange !== undefined) {
             this.props.onChange(null);
+            this.props.setIsNewImage(true);
         }
     }
 
@@ -50,6 +53,7 @@ class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> 
                 this.readURI(event);
                 if (this.props.onChange !== undefined) {
                     this.props.onChange(event.target.files[0]);
+                    this.props.setIsNewImage(true);
                 }
             }
         }

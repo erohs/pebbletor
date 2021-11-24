@@ -41,8 +41,8 @@ class HillPage extends React.Component<IHillPageProps, IHillPageState> {
             });
     }
 
-    updateMarkerWithForm = (id: string, formData: FormData) => {
-        updateMarker(id, formData)
+    updateMarkerWithForm = (id: string, formData: FormData, isNewImage: boolean) => {
+        updateMarker(id, formData, isNewImage)
             .then(res => {
                 let newMarkers: IMarker[] = [...this.state.markers];
                 const index = newMarkers.findIndex(m => m._id === res.data._id);

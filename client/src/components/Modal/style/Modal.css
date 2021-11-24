@@ -35,13 +35,23 @@
 
 .modal__header-close {
     background: none;
-    padding: var(--s-padding) var(--m-padding);
+    width: 2em;
+    height: 2em;
     border: none;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
 }
 
-.modal__header-close { 
+.modal__header-close:hover { 
     cursor: pointer;
-    color: var(--subtext-color);
+    background: var(--secondary-bg-color)
+}
+
+.modal__header-close:focus { 
+    background: var(--secondary-bg-color)
 }
 
 .modal__content {

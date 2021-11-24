@@ -30,6 +30,7 @@ const ModalSelector : React.FC<IModalSelectorProps> = props => {
             return (
                 <ModalContainer onSubmit={() => props.delete(props.marker!._id)}
                                 onClose={() => props.selectModal(ModalType.None)}
+                                manualClose={false}
                                 isShown={true}
                                 trigger={props.deleteButtonRef}
                                 text={{title: "Delete Marker", submit: "Delete"}}
