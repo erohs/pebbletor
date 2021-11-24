@@ -69,16 +69,13 @@ export class MarkerHelper {
     static getPosition = (props: IMarkerProps, index: IMarkerStatusIndex) => {
         let position: ICoord = {x: props.marker.x, y: props.marker.y};
 
-        if (position.x === undefined || position.y === undefined) {
-            if (props.marker.isNewPercentage) {
-                position = MarkerHelper.getPointAtPercentage(props.line, props.marker.percentage);
-            }
-        } else {
-            if (index.inactive > -1) {
-                position = {x: 110, y: 50 + (30 * (index.inactive))};
-            } else if (index.complete > -1) {
-                position = {x: 1000, y: 50 + (30 * (index.complete))};
-            }
+        if (props.marker.isNewPercentage) {
+            position = MarkerHelper.getPointAtPercentage(props.line, props.marker.percentage);
+        }
+        if (index.inactive > -1) {
+            position = {x: 110, y: 50 + (30 * (index.inactive))};
+        } else if (index.complete > -1) {
+            position = {x: 1000, y: 50 + (30 * (index.complete))};
         }
 
         return position;
@@ -140,6 +137,8 @@ export class MarkerHelper {
             } else {
                 newMarker.status = MarkerStatus.Active
             }
+
+            newMarker = MarkerHelper.stackMarker(newMarker, props.markers);
             
             props.updateMarker(newMarker);
         }

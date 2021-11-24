@@ -16,7 +16,6 @@ const MarkerModal = (props: IMarkerModalProps) => {
     const [colour, setColour] = useState(props.marker?.colour || Colour.Gray);
     const [status, setStatus] = useState(props.marker?.status || MarkerStatus.Active);
     const [image, setImage] = useState<File | null>(null);
-    const [imageName, setImageName] = useState("");
     const [isNewImage, setIsNewImage] = useState<boolean>(false);
     const [notice, setNotice] = useState<NoticeType>(NoticeType.None)
 
@@ -34,7 +33,7 @@ const MarkerModal = (props: IMarkerModalProps) => {
         formData.append("status", status);
         
         if (image !== null) {
-            formData.append("image", image!, imageName)
+            formData.append("image", image!, image.name)
         }
 
         if (props.marker !== undefined) {
@@ -63,10 +62,7 @@ const MarkerModal = (props: IMarkerModalProps) => {
                 "PNG",
                 100,
                 0,
-                (uri) => {
-                    setImageName(file.name);
-                    setImage(uri as File);
-                },
+                (uri) => setImage(uri as File),
                 "blob"
             );
         } else setImage(null);
