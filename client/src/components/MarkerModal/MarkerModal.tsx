@@ -1,5 +1,8 @@
 import ModalContainer from "../Modal/ModalContainer";
 import ImageUpload from "../ImageUpload/ImageUpload";
+import Resizer from "react-image-file-resizer";
+import Notice from "../Notice/Notice";
+import { NoticeType } from "../Notice/util/NoticeTypeEnum";
 import { useState } from "react";
 import { Colour } from "../../util/ColourEnum";
 import { MarkerStatus } from "../Marker/util/MarkerStatusEnum";
@@ -13,9 +16,14 @@ const MarkerModal = (props: IMarkerModalProps) => {
     const [colour, setColour] = useState(props.marker?.colour || Colour.Gray);
     const [status, setStatus] = useState(props.marker?.status || MarkerStatus.Active);
     const [image, setImage] = useState<File | null>(null);
-    const [imagePath, setImagePath] = useState(props.marker?.imagePath || undefined)
+    const [imageName, setImageName] = useState("");
+    const [isNewImage, setIsNewImage] = useState<boolean>(false);
+    const [notice, setNotice] = useState<NoticeType>(NoticeType.None)
 
     const handleSubmit = () => {
+        if (!validateInput()) {
+            return;
+        }
         const isNewPercentage =  percentage !== props.marker?.percentage || ((props.marker.status === MarkerStatus.Complete || props.marker.status === MarkerStatus.Inactive) && status === MarkerStatus.Active);
         const formData = new FormData();
         formData.append("hillId", props.hillId);
@@ -26,7 +34,7 @@ const MarkerModal = (props: IMarkerModalProps) => {
         formData.append("status", status);
         
         if (image !== null) {
-            formData.append("image", image!, image?.name)
+            formData.append("image", image!, imageName)
         }
 
         if (props.marker !== undefined) {
@@ -36,16 +44,52 @@ const MarkerModal = (props: IMarkerModalProps) => {
             if (props.marker.imagePath !== undefined) {
                 formData.append("imagePath", props.marker.imagePath);
             }
-            
-            props.update(props.marker._id, formData);
-        } else props.add(formData);
+            props.update(props.marker._id, formData, isNewImage);
+            closeModal();
+        } else {
+            props.add(formData);
+            closeModal();
+        }
 
+        props.selectModal(ModalType.None);
+    }
+
+    const handleImageChange = (file: File | null) => {
+        if (file !== null) {
+            Resizer.imageFileResizer(
+                file,
+                64,
+                64,
+                "PNG",
+                100,
+                0,
+                (uri) => {
+                    setImageName(file.name);
+                    setImage(uri as File);
+                },
+                "blob"
+            );
+        } else setImage(null);
+    }
+
+    const validateInput = (): Boolean => {
+        setNotice(NoticeType.None)
+        if (!name.trim()) {
+            setNotice(NoticeType.Error);
+            return false;
+        }
+        return true;
+    }
+
+    const closeModal = () => {
+        document.querySelector('html')!.classList.toggle('scroll-lock');
         props.selectModal(ModalType.None);
     }
     
     return (
         <ModalContainer onSubmit={() => handleSubmit()}
                         onClose={() => props.selectModal(ModalType.None)}
+                        manualClose={true}
                         isShown={true}
                         trigger={props.buttonRef}
                         text={{title: props.title, submit: "Save"}}>
@@ -54,11 +98,13 @@ const MarkerModal = (props: IMarkerModalProps) => {
                 <ImageUpload id="marker-modal__upload" 
                              alt="marker image"
                              imagePath={props.marker?.imagePath}
-                             onChange={setImage} />
+                             isNewImage={isNewImage}
+                             setIsNewImage={setIsNewImage}
+                             onChange={handleImageChange} />
                 <label className="marker-modal__label">Marker name: </label>
                 <input type="text"
                        className="marker-modal__input"
-                       required 
+                       required
                        value={name}
                        onChange={(e) => setName(e.target.value)} />
                 <label className="marker-modal__label">Marker percentage: </label>
@@ -86,6 +132,7 @@ const MarkerModal = (props: IMarkerModalProps) => {
                         })}
                 </select>
             </div>
+            { notice !== NoticeType.None ? <Notice text="Name field must not be empty" type={NoticeType.Error} /> : null }            
         </ModalContainer>
     );
 }

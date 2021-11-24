@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fs = require('fs').promises;
 let Hill = require('../models/hill');
 let Marker = require('../models/marker');
 
@@ -31,6 +32,20 @@ router.route('/:id').delete((req, res) => {
     Hill.findByIdAndDelete(req.params.id)
         .then(() => res.json('Hill deleted.'))
         .catch(error => res.status(400).json('Error: ' + error));
+    Marker.find({hillId: req.params.id})
+        .exec()
+        .then(markers => {
+            markers.map(marker => {
+                marker.deleteOne({_id: req.params.id})
+                    .then(() => {
+                        if (marker.imagePath) {
+                            fs.unlink(marker.imagePath);
+                        }
+                        res.json('Marker deleted.')
+                    })
+                    .catch(error => res.status(400).json('Error: ' + error));
+            });
+        });
     Marker.deleteMany({hillId: req.params.id})
         .then(() => res.json('Markers deleted.'))
         .catch(error => {});

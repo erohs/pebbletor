@@ -6,7 +6,7 @@ export interface IModalSelectorProps {
     marker: IMarker | undefined,
     add: (marker: FormData) => void,
     addButtonRef: React.RefObject<HTMLButtonElement>,
-    update: (id: string, marker: FormData) => void,
+    update: (id: string, marker: FormData, isNewImage: boolean) => void,
     updateButtonRef: React.RefObject<HTMLButtonElement>,
     delete: (id: string) => void,
     deleteButtonRef: React.RefObject<HTMLButtonElement>,

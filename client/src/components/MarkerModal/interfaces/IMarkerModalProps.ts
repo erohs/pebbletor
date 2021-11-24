@@ -7,6 +7,6 @@ export interface IMarkerModalProps {
     marker?: IMarker,
     buttonRef: React.RefObject<HTMLButtonElement>
     add: (marker: FormData) => void,
-    update: (id: string, marker: FormData) => void,
+    update: (id: string, marker: FormData, isNewImage: boolean) => void,
     selectModal: (modal: string) => void
 }
