@@ -1,13 +1,12 @@
 import { IMarker } from "../../Marker/interfaces/IMarker";
-import { INewMarker } from "../../Marker/interfaces/INewMarker";
 
 export interface IModalSelectorProps {
     modal: string,
     hillId: string,
     marker: IMarker | undefined,
-    add: (marker: INewMarker) => void,
+    add: (marker: FormData) => void,
     addButtonRef: React.RefObject<HTMLButtonElement>,
-    update: (marker: IMarker) => void,
+    update: (id: string, marker: FormData, isNewImage: boolean) => void,
     updateButtonRef: React.RefObject<HTMLButtonElement>,
     delete: (id: string) => void,
     deleteButtonRef: React.RefObject<HTMLButtonElement>,

@@ -1,24 +1,30 @@
-import React from "react";
 import Marker from "../Marker/Marker";
+import { useEffect, useState } from "react";
 import { IHillProps } from "./interfaces/IHillProps";
-import { IHillState } from "./interfaces/IHillState";
 import { IMarker } from "../Marker/interfaces/IMarker";
 import * as d3 from "d3";
 import "./style/Hill.css";
 
-class Hill extends React.Component<IHillProps, IHillState> {
-    state = {
-        svg: null,
-        line: null
-    };
+function Hill(props: IHillProps){
+    const [svg, setSvg] = useState(null);
+    const [line, setLine] = useState(null);
 
-    componentDidMount() {
+    useEffect(() => {
         const line = d3.line().curve(d3.curveCatmullRom);
         const svg: any = d3.select("#hill__svg");
-        svg.on("click", this.props.deselectMarker);
+        svg.on("click", props.deselectMarker);
+        
+        const defs = svg.append("defs");
+        defs.append("clipPath")
+            .attr("id", "avatar-clip")
+            .append("circle")
+            .attr("cx", 13)
+            .attr("cy", 13)
+            .attr("r", 12)
+
         const path = svg
             .append("path")
-            .datum(this.props.points)
+            .datum(props.points)
             .attr("d", line)
             .attr("id", "hill__path");
 
@@ -37,31 +43,30 @@ class Hill extends React.Component<IHillProps, IHillState> {
         .attr("class", "hill__text")
         .text("Complete");
         
-        this.setState({ svg: svg.node(), line: path.node() });
-    }
+        setSvg(svg.node());
+        setLine(path.node());
+    }, []);
 
-    render() {
-        return (
-            <div className="hill">
-                <h1 className="hill__title">{this.props.hill.name}</h1>
-                <p className="hill__subtitle">{this.props.hill.description}</p>
-                <svg id="hill__svg"
-                    width={this.props.size.width}
-                    height={this.props.size.height}>
-                    {this.props.markers.map((marker: IMarker) => (
-                        <Marker svg={this.state.svg}
-                                line={this.state.line}
-                                marker={marker}
-                                markers={this.props.markers}
-                                selectedMarker={this.props.selectedMarker}
-                                selectMarker={this.props.selectMarker}
-                                updateMarker={this.props.updateMarker}
-                                key={marker._id} />
-                    ))}
-                </svg>
-            </div>
-        );
-    }
+    return (
+        <div className="hill">
+            <h1 className="hill__title">{props.hill.name}</h1>
+            <p className="hill__subtitle">{props.hill.description}</p>
+            <svg id="hill__svg"
+                width={props.size.width}
+                height={props.size.height}>
+                {props.markers.map((marker: IMarker) => (
+                    <Marker svg={svg}
+                            line={line}
+                            marker={marker}
+                            markers={props.markers}
+                            selectedMarker={props.selectedMarker}
+                            selectMarker={props.selectMarker}
+                            updateMarker={props.updateMarker}
+                            key={marker._id} />
+                ))}
+            </svg>
+        </div>
+    );
 }
 
 export default Hill;
