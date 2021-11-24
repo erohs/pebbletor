@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { INoticeProps } from "./interfaces/INoticeProps";
 import './style/Notice.css';
 

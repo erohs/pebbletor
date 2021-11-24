@@ -1,8 +1,8 @@
 import React from "react";
-import { baseUrl } from "../../api";
-import { validImageTypes } from "../../util/ValidImageTypes";
 import ImageIcon from "../Icons/ImageIcon";
 import UploadIcon from "../Icons/UploadIcon";
+import { baseUrl } from "../../api";
+import { validImageTypes } from "../../util/ValidImageTypes";
 import { IImageUploadProps } from "./interfaces/IImageUploadProps";
 import { IImageUploadState } from "./interfaces/IImageUploadState";
 import "./style/ImageUpload.css";
@@ -21,8 +21,7 @@ class ImageUpload extends React.Component<IImageUploadProps, IImageUploadState> 
         if(this.state.hasImage) {
             if (this.state.imageURI !== "") {
                 return <img className="image-upload__image" src={this.state.imageURI} alt={this.props.alt}/>
-            }
-            if (this.props.imagePath !== undefined) {
+            } else if (this.props.imagePath !== undefined) {
                 return <img className="image-upload__image" src={`${baseUrl}/${this.props.imagePath}`} alt={this.props.alt}/>
             }
         }

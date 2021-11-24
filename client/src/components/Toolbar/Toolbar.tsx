@@ -81,7 +81,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarStatus> {
                                             onClick={() => this.openEditModal(marker._id)}
                                             key={index}>
                                         { marker.imagePath ? 
-                                            <img src={`${baseUrl}/${marker.imagePath}`} className="dropdown__marker" /> : 
+                                            <img src={`${baseUrl}/${marker.imagePath}`} className="dropdown__marker" alt="marker"/> : 
                                             <div style={{backgroundColor: marker.colour}} className="dropdown__marker" />
                                         }
                                         {marker.name}
