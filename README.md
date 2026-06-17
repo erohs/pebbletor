@@ -186,7 +186,7 @@ See the [open issues](https://github.com/erohs/pebbletor/issues) for a full list
 <!-- CONTACT -->
 ## Contact
 
-Jacob Shore - [@jerohzdev](https://twitter.com/jerohzdev) - jashore@hotmail.co.uk
+Naomi Shore
 
 Project Link: [https://github.com/erohs/pebbletor](https://github.com/erohs/pebbletor)
 
